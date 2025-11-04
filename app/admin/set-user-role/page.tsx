@@ -16,13 +16,12 @@ export default async function AdminDashboard(params: {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
-      <main className="container mx-auto flex-grow p-4">
+      <main className="container mx-auto grow p-4">
         <form className="mb-6">
           <div className="flex flex-col gap-2">
             <label htmlFor="search">Search for users</label>
             <div className="flex gap-2">
-              <Input id="search" name="search" type="text" className="flex-grow" />
+              <Input id="search" name="search" type="text" className="grow" />
               <Button type="submit">Submit</Button>
             </div>
           </div>
