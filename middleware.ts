@@ -1,6 +1,18 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server'
 
-export default clerkMiddleware();
+// The route matcher defines routes that should be protected
+const isAdminRoute = createRouteMatcher(['/admin(.*)'])
+export default clerkMiddleware(async (auth, req) => {
+  // Fetch the user's role from the session claims
+  const userRole = (await auth()).sessionClaims?.metadata?.role
+
+  // Protect all routes starting with `/admin`
+  if (isAdminRoute(req) && !(userRole === 'admin' || userRole === 'moderator')) {
+    const url = new URL('/', req.url)
+    return NextResponse.redirect(url)
+  }
+})
 
 export const config = {
     matcher: [
