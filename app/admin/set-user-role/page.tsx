@@ -52,20 +52,14 @@ export default async function AdminDashboard(params: {
 
                 <form action={setRole} className="mt-2">
                   <input type="hidden" value={user.id} name="id" />
-                  <input type="hidden" value="moderator" name="role" />
+                  <input type="hidden" value="charity staff" name="role" />
                   <Button type="submit">Make Charity Staff</Button>
                 </form>
 
                 <form action={setRole} className="mt-2">
                   <input type="hidden" value={user.id} name="id" />
-                  <input type="hidden" value="contributor" name="role" />
-                  <Button type="submit">Make Contributor</Button>
-                </form>
-
-                <form action={setRole} className="mt-2">
-                  <input type="hidden" value={user.id} name="id" />
-                  <input type="hidden" value="viewer" name="role" />
-                  <Button type="submit">Make Viewer</Button>
+                  <input type="hidden" value="donor" name="role" />
+                  <Button type="submit">Make Donor</Button>
                 </form>
 
                 <form action={removeRole} className="mt-2">
