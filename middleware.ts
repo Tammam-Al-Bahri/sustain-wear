@@ -3,15 +3,23 @@ import { NextResponse } from 'next/server'
 
 // The route matcher defines routes that should be protected
 const isAdminRoute = createRouteMatcher(['/admin(.*)'])
+const isCharityRoute = createRouteMatcher(['/charity-staff(.*)'])
+
 export default clerkMiddleware(async (auth, req) => {
   // Fetch the user's role from the session claims
   const userRole = (await auth()).sessionClaims?.metadata?.role
 
   // Protect all routes starting with `/admin`
-  if (isAdminRoute(req) && !(userRole === 'admin' || userRole === 'moderator')) {
+  if (isAdminRoute(req) && !(userRole === 'admin')) {
     const url = new URL('/', req.url)
     return NextResponse.redirect(url)
   }
+  if (isCharityRoute(req) && !(userRole === 'charity staff' || userRole === 'admin')) {
+      return NextResponse.redirect(new URL('/', req.url))
+
+  }
+
+  return NextResponse.next()
 })
 
 export const config = {
