@@ -1,26 +1,48 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from 'next/server'
 
-// The route matcher defines routes that should be protected
-const isAdminRoute = createRouteMatcher(['/admin(.*)'])
-const isCharityRoute = createRouteMatcher(['/charity-staff(.*)'])
+const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
+const isCharityRoute = createRouteMatcher(["/charity-staff(.*)"]);
+const isDonorRoute = createRouteMatcher(["/donor(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // Fetch the user's role from the session claims
-  const userRole = (await auth()).sessionClaims?.metadata?.role
+  const { userId, sessionClaims } = await auth();
+  const userRole = sessionClaims?.metadata?.role;
+  const currentPath = req.nextUrl.pathname;
 
-  // Protect all routes starting with `/admin`
-  if (isAdminRoute(req) && !(userRole === 'admin')) {
-    const url = new URL('/', req.url)
-    return NextResponse.redirect(url)
+  //  1. If NOT logged in, allow homepage and block protected routes
+  if (!userId) {
+    if (isAdminRoute(req) || isCharityRoute(req)) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+    return NextResponse.next(); // allow access to home
   }
-  if (isCharityRoute(req) && !(userRole === 'charity staff' || userRole === 'admin')) {
-      return NextResponse.redirect(new URL('/', req.url))
 
+  //  2. If logged in and on homepage → send to correct role page
+  if (currentPath === "/") {
+    if (userRole === "admin") return NextResponse.redirect(new URL("/admin", req.url));
+    if (userRole === "charity-staff") return NextResponse.redirect(new URL("/charity-staff", req.url));
+    return NextResponse.next(); // or redirect to /donor if you add a donor page later
   }
 
-  return NextResponse.next()
-})
+  //  3. Protect admin routes
+  if (isAdminRoute(req) && userRole !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  //  4. Protect charity-staff routes (allow admin too)
+  if (isCharityRoute(req) && userRole !== "charity-staff" && userRole !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  //  5. Protect donor routes (allow admin too)
+  if (isDonorRoute(req) && userRole !== "donor" && userRole !== "admin") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+ 
+
+  return NextResponse.next();
+});
 
 export const config = {
     matcher: [
