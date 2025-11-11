@@ -140,6 +140,12 @@ header {
   stroke-width: 4px;
 
 }
+header p {
+  margin-right:auto;
+  font-size: 28px;
+  font-weight: bold;
+  font-weight: 900;
+}
 
 
 
