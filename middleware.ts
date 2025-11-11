@@ -22,7 +22,8 @@ export default clerkMiddleware(async (auth, req) => {
   if (currentPath === "/") {
     if (userRole === "admin") return NextResponse.redirect(new URL("/admin", req.url));
     if (userRole === "charity-staff") return NextResponse.redirect(new URL("/charity-staff", req.url));
-    return NextResponse.next(); // or redirect to /donor if you add a donor page later
+    if (userRole === "donor") return NextResponse.redirect(new URL("/donor", req.url));
+       // or redirect to /donor if you add a donor page later
   }
 
   //  3. Protect admin routes
