@@ -52,7 +52,7 @@ export default async function AdminDashboard(params: {
 
                 <form action={setRole} className="mt-2">
                   <input type="hidden" value={user.id} name="id" />
-                  <input type="hidden" value="charity staff" name="role" />
+                  <input type="hidden" value="charity-staff" name="role" />
                   <Button type="submit">Make Charity Staff</Button>
                 </form>
 
