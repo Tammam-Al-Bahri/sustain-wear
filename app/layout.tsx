@@ -5,6 +5,7 @@ import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -30,7 +31,10 @@ export default function RootLayout({
             <html lang="en">
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <Header />
+                    <br />
+                    <div id="container" className="h-dvh flex p-4">
                     {children}
+                    </div>
                 </body>
             </html>
         </ClerkProvider>
