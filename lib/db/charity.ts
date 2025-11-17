@@ -20,10 +20,19 @@ export async function createCharity(clerkId: string, name: string, description: 
     });
 }
 
-export async function getCharities(status?: CharityStatus) {
+export async function getCharities(creatorId?: string, status?: CharityStatus) {
     return await prisma.charity.findMany({
         where: {
+            creatorId,
             status,
+        },
+    });
+}
+
+export async function getCharityFromId(id: string) {
+    await prisma.charity.findFirst({
+        where: {
+            id,
         },
     });
 }
