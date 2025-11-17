@@ -97,8 +97,8 @@ enum CharityStatus {
 }
 
 enum MembershipRole {
-  ADMIN
   STAFF
+  ADMIN
 }
 
 enum MembershipStatus {

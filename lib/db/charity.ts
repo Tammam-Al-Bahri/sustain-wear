@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
+import { CharityStatus } from "@prisma/client";
 
-export async function CreateCharity(clerkId: string, name: string, description: string) {
+export async function createCharity(clerkId: string, name: string, description: string) {
     const user = await prisma.user.findFirst({
         where: {
             clerkId,
@@ -15,6 +16,14 @@ export async function CreateCharity(clerkId: string, name: string, description: 
             creatorId: user.id,
             name,
             description,
+        },
+    });
+}
+
+export async function getCharities(status?: CharityStatus) {
+    return await prisma.charity.findMany({
+        where: {
+            status,
         },
     });
 }

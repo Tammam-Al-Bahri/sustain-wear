@@ -1,7 +1,7 @@
 "use server";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { CreateCharity } from "@/lib/db/charity";
+import { createCharity } from "@/lib/db/charity";
 
 export async function createCharityAction(formData: FormData) {
     const user = await currentUser();
@@ -13,6 +13,9 @@ export async function createCharityAction(formData: FormData) {
     if (!name || !description) {
         return { error: "Missing fields" };
     }
-    const charity = await CreateCharity(user.id, name, description);
+    const charity = await createCharity(user.id, name, description);
+    if (!charity) {
+        return { error: "Could not create charity" };
+    }
     return { charity };
 }
