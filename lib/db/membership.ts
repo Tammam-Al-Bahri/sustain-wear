@@ -55,17 +55,17 @@ export async function getMembership(userId: string, charityId: string) {
     });
 }
 
-export async function getCharityIdFromMemberId(memberId: string) {
+export async function getCharityFromMemberId(memberId: string) {
     return (
         await prisma.membership.findFirst({
             where: {
                 userId: memberId,
             },
             select: {
-                charityId: true,
+                charity: true,
             },
         })
-    )?.charityId;
+    )?.charity;
 }
 
 // charity creator and admins can change membership roles to pending or active
@@ -74,12 +74,12 @@ export async function updateMembershipStatus(
     membershipId: string,
     status: MembershipStatus
 ) {
-    const charityId = await getCharityIdFromMemberId(userId);
+    const charityId = (await getCharityFromMemberId(userId))?.id;
     if (!charityId) return null;
     const role = (await getMembership(userId, charityId))?.role;
     if (role != "ADMIN") return null;
     if (!role) {
-        const creatorId = await getCharityIdFromMemberId(userId);
+        const creatorId = (await getCharityFromMemberId(userId))?.creatorId;
         if (creatorId != userId) return null;
     }
 
@@ -99,7 +99,7 @@ export async function updateMembershipRole(
     membershipId: string,
     role: MembershipRole
 ) {
-    const creatorId = await getCharityIdFromMemberId(userId);
+    const creatorId = (await getCharityFromMemberId(userId))?.creatorId;
     if (creatorId != userId) return null;
     return await prisma.membership.update({
         where: {
