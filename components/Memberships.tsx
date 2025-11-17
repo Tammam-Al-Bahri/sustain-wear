@@ -30,7 +30,9 @@ export default async function Memberships({
                         <CardDescription>Charity: {charity.name}</CardDescription>
                         <CardDescription>Member: {user.name}</CardDescription>
                         <CardDescription>Role: {role}</CardDescription>
-                        <CardDescription>Status: {status}</CardDescription>
+                        <CardDescription>
+                            Status: {status.toLowerCase().replace("_", " ")}
+                        </CardDescription>
                     </CardContent>
                 </Card>
             ))}

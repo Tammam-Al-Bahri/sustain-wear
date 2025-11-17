@@ -38,3 +38,14 @@ export async function getCharityCreatorId(charityId: string) {
         },
     });
 }
+
+export async function updateCharityStatus(charityId: string, status: CharityStatus) {
+    return await prisma.charity.update({
+        where: {
+            id: charityId,
+        },
+        data: {
+            status,
+        },
+    });
+}

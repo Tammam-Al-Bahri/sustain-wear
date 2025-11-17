@@ -4,7 +4,7 @@ import { useTransition, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createMembershipAction } from "@/app/actions/createMembership";
 
-export default function JoinCharity({ charityId }: { charityId: string }) {
+export default function CreateMembership({ charityId }: { charityId: string }) {
     const [isPending, startTransition] = useTransition();
     const [message, setMessage] = useState("");
 

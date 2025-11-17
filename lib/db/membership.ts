@@ -11,6 +11,8 @@ export async function createMembership(userId: string, charityId: string) {
     if (!charity) return null;
     // if charity creator is trying to join own charity
     if (charity.creatorId === userId) return null;
+    // if membership already exists
+    if (await getMembership(userId, charityId)) return null;
     // create membership
     return await prisma.membership.create({
         data: {

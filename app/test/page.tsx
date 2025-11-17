@@ -2,7 +2,7 @@ import CreateCharity from "@/components/CreateCharity";
 import Charities from "@/components/Charities";
 import Memberships from "@/components/Memberships";
 import { getUserIdFromClerkId } from "@/lib/db/user";
-import { currentUser } from "@clerk/nextjs/server";
+import { currentUser, auth } from "@clerk/nextjs/server";
 
 export default async function Test() {
     const clerkUser = await currentUser();
@@ -22,8 +22,9 @@ export default async function Test() {
 
             <div className="flex-col w-full">
                 <div className="text-2xl">All Charities</div>
-                {/* all charities */}
                 <Charities />
+                <div className="text">All Active</div>
+                <Charities status="ACTIVE" />
             </div>
 
             <div className="flex-col w-full">
