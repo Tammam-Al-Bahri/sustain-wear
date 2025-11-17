@@ -2,11 +2,11 @@
 
 import { currentUser } from "@clerk/nextjs/server";
 import { createMembership } from "@/lib/db/membership";
-import { getIdFromClerkId } from "@/lib/db/user";
+import { getUserIdFromClerkId } from "@/lib/db/user";
 
 export async function createMembershipAction(charityId: string) {
     const clerkUser = await currentUser();
-    const userId = await getIdFromClerkId(clerkUser?.id);
+    const userId = await getUserIdFromClerkId(clerkUser?.id);
     if (!userId) return { error: "Not authenticated" };
 
     const membership = await createMembership(userId, charityId);

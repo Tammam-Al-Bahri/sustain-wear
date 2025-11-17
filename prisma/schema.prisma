@@ -59,6 +59,8 @@ model Membership {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([userId, charityId])
 }
 
 model Item {

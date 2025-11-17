@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
-export async function getIdFromClerkId(clerkId: string | undefined) {
+export async function getUserIdFromClerkId(clerkId: string | undefined) {
     if (!clerkId) return undefined;
     return (
-        await prisma.user.findFirst({
+        await prisma.user.findUnique({
             where: {
                 clerkId,
             },

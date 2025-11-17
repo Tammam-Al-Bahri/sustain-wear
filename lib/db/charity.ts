@@ -1,19 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { CharityStatus } from "@prisma/client";
 
-export async function createCharity(clerkId: string, name: string, description: string) {
-    const user = await prisma.user.findFirst({
-        where: {
-            clerkId,
-        },
-        select: {
-            id: true,
-        },
-    });
-    if (!user) return null; // if no user in db found from clerkId for some reason
+export async function createCharity(userId: string, name: string, description: string) {
     return await prisma.charity.create({
         data: {
-            creatorId: user.id,
+            creatorId: userId,
             name,
             description,
         },
@@ -29,10 +20,21 @@ export async function getCharities(creatorId?: string, status?: CharityStatus) {
     });
 }
 
-export async function getCharityFromId(id: string) {
-    await prisma.charity.findFirst({
+export async function getCreatedCharitiesFromUserId(userId: string) {
+    return await prisma.charity.findMany({
         where: {
-            id,
+            creatorId: userId,
+        },
+        include: {
+            memberships: true,
+        },
+    });
+}
+
+export async function getCharityCreatorId(charityId: string) {
+    return await prisma.charity.findUnique({
+        where: {
+            id: charityId,
         },
     });
 }
