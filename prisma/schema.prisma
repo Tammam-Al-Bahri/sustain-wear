@@ -9,18 +9,111 @@ datasource db {
 
 model User {
   id       String  @id @default(cuid())
-  clerkId  String  @unique
-  email    String  @unique
-  name     String?
-  imageUrl String?
+  clerkId  String  @unique // from clerk
+  email    String  @unique // from clerk
+  name     String?         // from clerk
+  imageUrl String?         // from clerk
 
-  globalRole Role @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // a user can have many memberships (can be staff for many charities)
+  memberships Membership[]
+
+  // a user can create many charities
+  charities Charity[]
+}
+
+model Charity {
+  id String  @id @default(cuid())
+
+  user User @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  name String
+  description String
+  status CharityStatus @default(PENDING_APPROVAL)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // a charity can have many memberships (the staff)
+  memberships Membership[]
+  // a charity can have many donations
+  donations Donation[]
+}
+
+model Membership {
+  id String  @id @default(cuid())
+
+  // a membership must have one user (the charity staff)
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  // a membership must have one charity
+  charity Charity @relation(fields: [charityId], references: [id])
+  charityId String
+
+  role MembershipRole @default(STAFF)
+  status MembershipStatus @default(PENDING_APPROVAL)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-enum Role {
-  USER
+model Item {
+  id String  @id @default(cuid())
+
+  // TODO: size, gender, type, etc...
+
+  status ItemStatus @default(UNLISTED)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  donation Donation? // an item can have one donation
+}
+
+model Donation {
+  id String  @id @default(cuid())
+
+  // a donation must have one item
+  item Item @relation(fields: [itemId], references: [id])
+  itemId String @unique
+  
+  // a donation must have one charity
+  charity Charity @relation(fields: [charityId], references: [id])
+  charityId String
+
+  status DonationStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CharityStatus {
+  PENDING_APPROVAL
+  ACTIVE
+}
+
+enum MembershipRole {
   ADMIN
+  STAFF
+}
+
+enum MembershipStatus {
+  PENDING_APPROVAL
+  ACTIVE
+}
+
+enum ItemStatus {
+  UNLISTED
+  LISTED
+  CLAIMED
+}
+
+enum DonationStatus {
+  PENDING
+  SENT
+  RECEIVED
 }
