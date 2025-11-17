@@ -22,7 +22,7 @@ export async function createMembership(userId: string, charityId: string) {
     });
 }
 
-export async function getMemberships(
+export async function listMemberships(
     userId?: string,
     charityId?: string,
     status?: MembershipStatus
@@ -57,17 +57,39 @@ export async function getMembership(userId: string, charityId: string) {
     });
 }
 
-export async function getCharityFromMemberId(memberId: string) {
-    return (
-        await prisma.membership.findFirst({
-            where: {
-                userId: memberId,
-            },
-            select: {
-                charity: true,
-            },
-        })
-    )?.charity;
+export async function getCharity(membershipId: string) {
+    return await prisma.membership.findUnique({
+        where: {
+            id: membershipId,
+        },
+        select: {
+            charity: true,
+        },
+    });
+}
+
+export async function isAdminOrCreator(userId: string, membershipId: string) {
+    const charity = (await getCharity(membershipId))?.charity;
+    if (!charity) return false;
+    const role = (await getMembership(userId, charity.id))?.role;
+    if (!role || role != "ADMIN") {
+        const creatorId = charity.creatorId;
+        if (creatorId != userId) return false;
+    }
+    return true;
+}
+
+export async function isCreator(userId: string, membershipId: string) {
+    const charity = (await getCharity(membershipId))?.charity;
+    if (!charity) return false;
+    const creatorId = charity.creatorId;
+    if (creatorId != userId) return false;
+    return true;
+}
+
+export async function isMember(userId: string, charityId: string) {
+    const membership = await getMembership(userId, charityId);
+    return !!membership;
 }
 
 // charity creator and admins can change membership roles to pending or active
@@ -76,15 +98,8 @@ export async function updateMembershipStatus(
     membershipId: string,
     status: MembershipStatus
 ) {
-    const charityId = (await getCharityFromMemberId(userId))?.id;
-    if (!charityId) return null;
-    const role = (await getMembership(userId, charityId))?.role;
-    if (role != "ADMIN") return null;
-    if (!role) {
-        const creatorId = (await getCharityFromMemberId(userId))?.creatorId;
-        if (creatorId != userId) return null;
-    }
-
+    const isAuthorised = await isAdminOrCreator(userId, membershipId);
+    if (!isAuthorised) return null;
     return prisma.membership.update({
         where: {
             id: membershipId,
@@ -101,8 +116,8 @@ export async function updateMembershipRole(
     membershipId: string,
     role: MembershipRole
 ) {
-    const creatorId = (await getCharityFromMemberId(userId))?.creatorId;
-    if (creatorId != userId) return null;
+    const isAuthorised = await isCreator(userId, membershipId);
+    if (!isAuthorised) return null;
     return await prisma.membership.update({
         where: {
             id: membershipId,

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-export default function CreateCharity() {
+export default function CreateCharityForm() {
     const [isPending, startTransition] = useTransition();
     const [message, setMessage] = useState("");
 

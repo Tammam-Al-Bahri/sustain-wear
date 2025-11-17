@@ -11,22 +11,11 @@ export async function createCharity(userId: string, name: string, description: s
     });
 }
 
-export async function getCharities(creatorId?: string, status?: CharityStatus) {
+export async function listCharities(creatorId?: string, status?: CharityStatus) {
     return await prisma.charity.findMany({
         where: {
             creatorId,
             status,
-        },
-    });
-}
-
-export async function getCreatedCharitiesFromUserId(userId: string) {
-    return await prisma.charity.findMany({
-        where: {
-            creatorId: userId,
-        },
-        include: {
-            memberships: true,
         },
     });
 }

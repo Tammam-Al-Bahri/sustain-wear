@@ -11,5 +11,6 @@ export default async function updateCharityStatusAction(charityId: string, statu
     // only clerk users with session role = admin
     if (clerkUserRole !== "admin") return { error: "Not authorised" };
     const charity = await updateCharityStatus(charityId, status);
+    if (!charity) return { error: "Could not update charity status" };
     return { charity };
 }

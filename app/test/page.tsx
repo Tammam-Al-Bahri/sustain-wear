@@ -1,8 +1,8 @@
-import CreateCharity from "@/components/CreateCharity";
-import Charities from "@/components/Charities";
-import Memberships from "@/components/Memberships";
+import CreateCharityForm from "@/components/charity/CreateCharityForm";
 import { getUserIdFromClerkId } from "@/lib/db/user";
-import { currentUser, auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
+import CharitiesContainer from "@/components/charity/CharitiesContainer";
+import MembershipsContainer from "@/components/membership/MembershipsContainer";
 
 export default async function Test() {
     const clerkUser = await currentUser();
@@ -11,30 +11,30 @@ export default async function Test() {
         <div className="flex gap-4">
             <div className="flex-col w-full">
                 <div className="text-2xl">Create Charity</div>
-                <CreateCharity />
+                <CreateCharityForm />
             </div>
 
             <div className="flex-col w-full">
                 <div className="text-2xl">Your Charities</div>
                 {/* charities you've created */}
-                <Charities creatorId={userId} />
+                <CharitiesContainer creatorId={userId} />
             </div>
 
             <div className="flex-col w-full">
                 <div className="text-2xl">All Charities</div>
-                <Charities />
+                <CharitiesContainer />
                 <div className="text">All Active</div>
-                <Charities status="ACTIVE" />
+                <CharitiesContainer status="ACTIVE" />
             </div>
 
             <div className="flex-col w-full">
                 <div className="text-2xl">Your Memberships</div>
                 <div className="text">All your Memberships</div>
-                <Memberships />
+                <MembershipsContainer />
                 <div className="text">Your Active Memberships</div>
-                <Memberships status="ACTIVE" />
+                <MembershipsContainer status="ACTIVE" />
                 <div className="text">Your Pending Memberships</div>
-                <Memberships status="PENDING_APPROVAL" />
+                <MembershipsContainer status="PENDING_APPROVAL" />
             </div>
         </div>
     );

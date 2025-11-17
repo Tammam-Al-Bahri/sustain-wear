@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import updateCharityStatusAction from "@/app/actions/updateCharityStatus";
 import { CharityStatus } from "@prisma/client";
 
-export default function UpdateCharityStatus({
+export default function UpdateCharityStatusButton({
     charityId,
     status,
 }: {
