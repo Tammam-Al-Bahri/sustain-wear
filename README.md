@@ -20,6 +20,35 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## How the branch mangment works
+
+Git Flow (for structured releases)
+
+main / master → Always stable, production-ready code.
+
+develop → Integration branch for new features.
+
+feature/ → One per new feature (branch off develop).
+
+release/ → Prepares for new production releases.
+
+hotfix/ → Fixes for urgent production bugs.
+
+Example:
+
+main
+
+├── develop 
+
+│   ├── feature/login-page 
+
+│   ├── feature/payment-api 
+
+│   └── release/v2.0 
+
+└── hotfix/typo-in-footer 
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
