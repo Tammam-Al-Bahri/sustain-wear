@@ -35,6 +35,9 @@ export default function RootLayout({
                     <div id="container" className="h-dvh flex p-4">
                     {children}
                     </div>
+                    <footer>
+                        <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
+                    </footer>
                 </body>
             </html>
         </ClerkProvider>
