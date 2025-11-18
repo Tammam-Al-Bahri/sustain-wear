@@ -8,8 +8,11 @@ export default async function Header() {
     const user = await checkUser();
     return (
         <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <p>SustainWear</p>
             <SignedOut>
-                <SignInButton />
+                <SignInButton>
+                    <Button>Log in</Button>
+                </SignInButton>
                 <SignUpButton>
                     <Button>Sign Up</Button>
                 </SignUpButton>
