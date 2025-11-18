@@ -120,3 +120,35 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  background: linear-gradient(to right, #83B47D, #3D533A);
+  padding: 25px;
+}
+#container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  height: 100vh;
+  
+}
+header {
+  background: linear-gradient(to right, white, #99D591);
+  border-radius: 25px;
+  stroke: white;
+  stroke-width: 4px;
+
+}
+header p {
+  margin-right:auto;
+  font-size: 28px;
+  font-weight: bold;
+  font-weight: 900;
+}
+
+#welcome-message {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+
+
