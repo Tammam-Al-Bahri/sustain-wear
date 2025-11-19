@@ -9,15 +9,12 @@ export default async function MembershipCard({
     membership: any;
     currentUserId: string;
 }) {
-    const { id, role, status, createdAt, updatedAt, charity, user } = membership;
+    const { id, role, status, createdAt, charity, user } = membership;
     const canManage = await isAdminOrCreator(currentUserId, id);
     return (
         <Card className="w-full">
             <CardHeader>
                 <CardDescription>Applied {createdAt.toDateString()}</CardDescription>
-                {status === "ACTIVE" && (
-                    <CardDescription>Joined {updatedAt.toDateString()}</CardDescription>
-                )}
             </CardHeader>
 
             <CardContent>
