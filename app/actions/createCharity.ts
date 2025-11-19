@@ -1,13 +1,10 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { createCharity } from "@/lib/db/charity";
-import { getUserIdFromClerkId } from "@/lib/db/user";
+import getCurrentUserIdAction from "./getCurrentUserId";
 
 export async function createCharityAction(formData: FormData) {
-    const user = await currentUser();
-    if (!user) return { error: "Not authenticated" };
-    const userId = await getUserIdFromClerkId(user.id);
+    const { userId } = await getCurrentUserIdAction();
     if (!userId) return { error: "Not authenticated" };
 
     const name = formData.get("name") as string;
