@@ -1,32 +1,31 @@
-import { auth } from "@clerk/nextjs/server";
-import { getUserIdFromClerkId } from "@/lib/db/user";
 import ItemsList from "./ItemsList";
 import { listItems } from "@/lib/db/item";
 import { ItemCategory, ItemCondition, ItemSize, ItemStatus, ItemType } from "@prisma/client";
 
 export default async function ItemsContainer({
-    creatorId,
+    currentUserId,
+    userId,
     size,
     type,
     category,
     condition,
     status,
+    selectable,
 }: {
-    creatorId?: string;
+    currentUserId: string | undefined;
+    userId?: string;
     size?: ItemSize;
     type?: ItemType;
     category?: ItemCategory;
     condition?: ItemCondition;
     status?: ItemStatus;
+    selectable?: boolean;
 }) {
-    const { userId: clerkUserId } = await auth();
-    const userId = await getUserIdFromClerkId(clerkUserId ?? undefined);
-
-    const items = await listItems(creatorId, size, type, category, condition, status);
+    const items = await listItems(userId, size, type, category, condition, status);
 
     return (
         <div>
-            <ItemsList items={items} currentUserId={userId} />
+            <ItemsList currentUserId={currentUserId} items={items} selectable={selectable} />
         </div>
     );
 }

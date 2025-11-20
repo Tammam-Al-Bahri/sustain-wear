@@ -20,14 +20,6 @@ export async function listCharities(creatorId?: string, status?: CharityStatus) 
     });
 }
 
-export async function getCharityCreatorId(charityId: string) {
-    return await prisma.charity.findUnique({
-        where: {
-            id: charityId,
-        },
-    });
-}
-
 export async function updateCharityStatus(charityId: string, status: CharityStatus) {
     return await prisma.charity.update({
         where: {

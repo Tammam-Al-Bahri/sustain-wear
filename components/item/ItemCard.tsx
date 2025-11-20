@@ -1,18 +1,33 @@
+"use client";
+
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import { Item } from "@prisma/client";
 
-export default async function ItemCard({
+export default function ItemCard({
     item,
     currentUserId,
+    selectable,
+    selected,
+    onSelect,
 }: {
     item: Item;
-    currentUserId?: string | null;
+    currentUserId: string | undefined;
+    selectable?: boolean;
+    selected?: boolean;
+    onSelect?: (id: string) => void;
 }) {
     const { id, userId, name, description, size, type, category, condition, status, createdAt } =
         item;
 
     return (
-        <Card className="w-full">
+        <Card
+            className={`w-full ${selectable && selected && "ring-2 ring-green-500"} ${
+                selectable && "hover:scale-101 select-none"
+            }`}
+            onClick={() => {
+                if (selectable && onSelect) onSelect(id);
+            }}
+        >
             <CardHeader>
                 <CardTitle>Name: {name}</CardTitle>
                 <CardDescription>Created: {createdAt.toDateString()}</CardDescription>
