@@ -1,17 +1,17 @@
 "use client";
 
 import { Combobox, ComboboxItem } from "@/components/combobox";
-import { useState } from "react";
+import { useItemsContext } from "@/components/item/ItemsContext";
 
 export default function CharityCombobox({ items }: { items: ComboboxItem[] }) {
-    const [selectedCharity, setSelectedCharity] = useState("");
+    const { selectedCharityId, setSelectedCharityId } = useItemsContext();
 
     return (
         <Combobox
             label="Charity*"
             items={items}
-            value={selectedCharity}
-            onValueChange={setSelectedCharity}
+            value={selectedCharityId}
+            onValueChange={setSelectedCharityId}
         />
     );
 }

@@ -1,3 +1,5 @@
+"use server";
+
 import { listMemberships } from "@/lib/db/membership";
 
 export default async function listCharitiesAction(userId?: string) {

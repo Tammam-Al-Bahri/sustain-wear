@@ -35,6 +35,7 @@ model Charity {
 
   name String
   description String
+  address String
   status CharityStatus @default(PENDING_APPROVAL)
 
   createdAt DateTime @default(now())

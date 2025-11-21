@@ -20,7 +20,7 @@ export default async function CharityCard({
     currentUserId?: string | null;
     clerkRole?: string;
 }) {
-    const { id, name, description, status, createdAt, creatorId } = charity;
+    const { id, name, description, address, status, createdAt, creatorId } = charity;
 
     const member = currentUserId ? await isMember(currentUserId, charity.id) : false;
     const isCreator = currentUserId === creatorId;
@@ -31,11 +31,12 @@ export default async function CharityCard({
         <Card className="w-full">
             <CardHeader>
                 <CardTitle>Charity: {name}</CardTitle>
-                <CardDescription>Created: {createdAt.toDateString()}</CardDescription>
+                <CardDescription>{description}</CardDescription>
+                <CardDescription>{address}</CardDescription>
             </CardHeader>
 
             <CardContent>
-                <CardDescription>{description}</CardDescription>
+                <CardDescription>Created: {createdAt.toDateString()}</CardDescription>
                 <CardDescription>Status: {status.toLowerCase().replace("_", " ")}</CardDescription>
 
                 {canJoin && <CreateMembershipButton charityId={id} />}

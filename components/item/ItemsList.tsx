@@ -1,41 +1,37 @@
 "use client";
 
-import { useState } from "react";
 import ItemCard from "./ItemCard";
 import { Item } from "@prisma/client";
+import { useItemsContext } from "./ItemsContext";
 
 export default function ItemsList({
     items,
     currentUserId,
     selectable,
-    onSelectionChange,
 }: {
     items: Item[];
     currentUserId?: string;
     selectable?: boolean;
-    onSelectionChange?: (ids: string[]) => void;
 }) {
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const { selectedItemIds, setSelectedItemIds } = useItemsContext();
+
     function toggleSelect(id: string) {
         if (!selectable) return;
 
-        setSelectedIds((prev) => {
-            const exists = prev.includes(id);
-            const updated = exists ? prev.filter((x) => x !== id) : [...prev, id];
-            onSelectionChange?.(updated);
-            return updated;
-        });
+        setSelectedItemIds((prev) =>
+            prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+        );
     }
 
     return (
         <div className="w-full flex-col">
-            {items.map((item) => (
+            {items.map((item: Item) => (
                 <ItemCard
                     key={item.id}
                     item={item}
                     currentUserId={currentUserId}
                     selectable={selectable}
-                    selected={selectedIds.includes(item.id)}
+                    selected={selectedItemIds.includes(item.id)}
                     onSelect={toggleSelect}
                 />
             ))}

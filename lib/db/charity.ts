@@ -1,12 +1,18 @@
 import { prisma } from "@/lib/prisma";
 import { CharityStatus } from "@prisma/client";
 
-export async function createCharity(userId: string, name: string, description: string) {
+export async function createCharity(
+    userId: string,
+    name: string,
+    description: string,
+    address: string
+) {
     return await prisma.charity.create({
         data: {
             creatorId: userId,
             name,
             description,
+            address,
         },
     });
 }

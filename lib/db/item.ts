@@ -1,5 +1,5 @@
 import { ItemCategory, ItemCondition, ItemSize, ItemStatus, ItemType } from "@prisma/client";
-import { prisma } from "../prisma";
+import { prisma } from "@/lib/prisma";
 
 export async function createItem(
     userId: string,
@@ -62,6 +62,15 @@ export async function updateItem(
             type,
             category,
             condition,
+            status,
+        },
+    });
+}
+
+export async function updateItems(itemIds: string[], status: ItemStatus) {
+    return await prisma.item.updateMany({
+        where: { id: { in: itemIds } },
+        data: {
             status,
         },
     });
