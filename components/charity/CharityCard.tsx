@@ -31,8 +31,8 @@ export default async function CharityCard({
         <Card className="w-full">
             <CardHeader>
                 <CardTitle>Charity: {name}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-                <CardDescription>{address}</CardDescription>
+                <CardDescription>Description: {description}</CardDescription>
+                <CardDescription>Address: {address}</CardDescription>
             </CardHeader>
 
             <CardContent>

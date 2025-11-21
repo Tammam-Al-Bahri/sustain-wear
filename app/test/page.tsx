@@ -38,26 +38,6 @@ export default async function Test() {
                 <div className="text">Your Pending Memberships</div>
                 <MembershipsContainer status="PENDING_APPROVAL" />
             </div>
-
-            <div className="flex-col w-full">
-                <div className="text-2xl">Create and List Item</div>
-                <CreateItemForm />
-            </div>
-
-            <div className="flex-col w-full">
-                <div className="text-2xl">Items</div>
-                <ItemsContainer
-                    currentUserId={userId}
-                    // size={selectedSize as ItemSize}
-                    // type={selectedType as ItemType}
-                    // category={selectedCategory as ItemCategory}
-                    // condition={selectedCondition as ItemCondition}
-                />
-            </div>
-            <div className="flex-col w-full">
-                <div className="text-2xl">Select Items</div>
-                <ItemsContainer currentUserId={userId} selectable={true} />
-            </div>
         </div>
     );
 }

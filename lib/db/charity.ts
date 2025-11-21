@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { CharityStatus } from "@prisma/client";
+import { getMembership } from "./membership";
 
 export async function createCharity(
     userId: string,
@@ -35,4 +36,15 @@ export async function updateCharityStatus(charityId: string, status: CharityStat
             status,
         },
     });
+}
+
+export async function isCharityCreatorOrStaff(userId: string, charityId: string) {
+    const charity = await prisma.charity.findUnique({
+        where: {
+            id: charityId,
+        },
+    });
+    if (charity?.creatorId === userId) return true;
+    const membership = await getMembership(userId, charityId);
+    return !!membership;
 }

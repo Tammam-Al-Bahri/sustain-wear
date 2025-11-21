@@ -1,6 +1,7 @@
 import CreateItemForm from "@/components/item/CreateItemForm";
 import ItemsContainer from "@/components/item/ItemsContainer";
 import getCurrentUserIdAction from "@/app/actions/getCurrentUserId";
+import DonationsContainer from "@/components/donation/DonationsContainer";
 
 export default async function Test() {
     const { userId } = await getCurrentUserIdAction();
@@ -14,12 +15,20 @@ export default async function Test() {
             </div>
 
             <div className="flex-col w-full">
-                <div className="text-2xl">Items</div>
-                <ItemsContainer currentUserId={userId} />
+                <div className="text-2xl">All Items</div>
+                <ItemsContainer />
+            </div>
+            <div className="flex-col w-full">
+                <div className="text-2xl">Your Items</div>
+                <ItemsContainer userId={userId} />
             </div>
             <div className="flex-col w-full">
                 <div className="text-2xl">Select Items</div>
-                <ItemsContainer currentUserId={userId} selectable={true} status={"LISTED"} />
+                <ItemsContainer selectable={true} status={"LISTED"} />
+            </div>
+            <div className="flex-col w-full">
+                <div className="text-2xl">Donations</div>
+                <DonationsContainer />
             </div>
         </div>
     );
