@@ -3,7 +3,6 @@
 import { useState } from "react";
 import ItemCard from "./ItemCard";
 import { Item } from "@prisma/client";
-import getCurrentUserIdAction from "@/app/actions/getCurrentUserId";
 
 export default function ItemsList({
     items,
@@ -26,11 +25,6 @@ export default function ItemsList({
             onSelectionChange?.(updated);
             return updated;
         });
-    }
-
-    async function handleClaim() {
-        await getCurrentUserIdAction();
-        alert("Items claimed!");
     }
 
     return (

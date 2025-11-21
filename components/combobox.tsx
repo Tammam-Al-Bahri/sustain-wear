@@ -15,19 +15,19 @@ import {
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-type Field = {
+export type ComboboxItem = {
     value: string;
     label: string;
 };
 
 export function Combobox({
     label,
-    fields,
+    items,
     value,
     onValueChange,
 }: {
     label: string;
-    fields: Field[];
+    items: ComboboxItem[];
     value: string;
     onValueChange: (value: string) => void;
 }) {
@@ -42,7 +42,7 @@ export function Combobox({
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {value ? fields.find((field) => field.value === value)?.label : label}
+                    {value ? items.find((item) => item.value === value)?.label : label}
                     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -52,10 +52,10 @@ export function Combobox({
                     <CommandList>
                         <CommandEmpty>No item found.</CommandEmpty>
                         <CommandGroup>
-                            {fields.map((field) => (
+                            {items.map((item) => (
                                 <CommandItem
-                                    key={field.value}
-                                    value={field.value}
+                                    key={item.value}
+                                    value={item.value}
                                     onSelect={(currentValue) => {
                                         onValueChange(currentValue === value ? "" : currentValue);
                                         setOpen(false);
@@ -64,10 +64,10 @@ export function Combobox({
                                     <CheckIcon
                                         className={cn(
                                             "mr-2 h-4 w-4",
-                                            value === field.value ? "opacity-100" : "opacity-0"
+                                            value === item.value ? "opacity-100" : "opacity-0"
                                         )}
                                     />
-                                    {field.label}
+                                    {item.label}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

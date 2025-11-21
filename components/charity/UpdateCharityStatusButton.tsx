@@ -16,7 +16,6 @@ export default function UpdateCharityStatusButton({
     const [message, setMessage] = useState("");
 
     function onSubmit() {
-        console.log("clicked");
         startTransition(async () => {
             const result = await updateCharityStatusAction(
                 charityId,

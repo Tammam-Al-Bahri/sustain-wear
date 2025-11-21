@@ -47,7 +47,7 @@ export default function CreateItemForm() {
                         <Input name="description" type="text" placeholder="Description" />
                         <Combobox
                             label="Size*"
-                            fields={[
+                            items={[
                                 { value: "XS", label: "XS" },
                                 { value: "S", label: "S" },
                                 { value: "M", label: "M" },
@@ -60,7 +60,7 @@ export default function CreateItemForm() {
                         />
                         <Combobox
                             label="Type*"
-                            fields={[
+                            items={[
                                 { value: "SHIRT", label: "Shirt" },
                                 { value: "TROUSERS", label: "Trousers" },
                                 { value: "JACKET", label: "Jacket" },
@@ -72,7 +72,7 @@ export default function CreateItemForm() {
                         />
                         <Combobox
                             label="Category*"
-                            fields={[
+                            items={[
                                 { value: "MENS", label: "Men" },
                                 { value: "WOMENS", label: "Womens" },
                                 { value: "UNISEX", label: "Unisex" },
@@ -83,7 +83,7 @@ export default function CreateItemForm() {
                         />
                         <Combobox
                             label="Condition*"
-                            fields={[
+                            items={[
                                 { value: "NEW", label: "New" },
                                 { value: "GOOD", label: "Good" },
                                 { value: "FAIR", label: "Fair" },
