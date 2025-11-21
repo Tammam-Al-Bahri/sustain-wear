@@ -10,8 +10,36 @@ export async function createDonations(itemIds: string[], charityId: string) {
     });
 }
 
-export async function listDonations(charityId?: string, status?: DonationStatus) {
-    return await prisma.donation.findMany({
+export async function listDonations(charityId?: string, userId?: string, status?: DonationStatus) {
+    if (userId) {
+        const user = await prisma.user.findUnique({
+            where: {
+                id: userId,
+            },
+            include: {
+                items: {
+                    include: {
+                        donation: {
+                            include: {
+                                charity: true,
+                                item: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        if (!user) return [];
+        const donations = user.items
+            .map((item) => item.donation)
+            .filter((d) => {
+                if (!d) return false;
+                if (status) return d.status === status;
+                return true;
+            });
+        return donations;
+    }
+    const donations = await prisma.donation.findMany({
         where: {
             charityId,
             status,
@@ -21,6 +49,7 @@ export async function listDonations(charityId?: string, status?: DonationStatus)
             item: true,
         },
     });
+    return donations;
 }
 
 export async function updateDonation(donationId: string, status: DonationStatus) {

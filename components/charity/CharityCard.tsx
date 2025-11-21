@@ -10,6 +10,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import DonationsContainer from "../donation/DonationsContainer";
 
 export default async function CharityCard({
     charity,
@@ -41,6 +42,15 @@ export default async function CharityCard({
 
                 {canJoin && <CreateMembershipButton charityId={id} />}
 
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger>Donations</AccordionTrigger>
+                        <AccordionContent>
+                            <DonationsContainer charityId={id} />
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+
                 {isCreator && (
                     <div>
                         <Accordion type="single" collapsible>
@@ -58,7 +68,7 @@ export default async function CharityCard({
                 )}
 
                 <Accordion type="single" collapsible>
-                    <AccordionItem value="item-1">
+                    <AccordionItem value="item-3">
                         <AccordionTrigger>Members</AccordionTrigger>
                         <AccordionContent>
                             <MembershipsContainer charityId={id} status="ACTIVE" />

@@ -27,8 +27,19 @@ export default async function Test() {
                 <ItemsContainer selectable={true} status={"LISTED"} />
             </div>
             <div className="flex-col w-full">
-                <div className="text-2xl">Donations</div>
+                <div className="text-2xl">All Donations</div>
                 <DonationsContainer />
+            </div>
+            <div className="flex-col w-full">
+                <div className="text-2xl">Your Donations</div>
+                <div className="text-xl">All</div>
+                <DonationsContainer userId={userId} />
+                <div className="text-xl">Received</div>
+                <DonationsContainer userId={userId} status="RECEIVED" />
+                <div className="text-xl">Sent</div>
+                <DonationsContainer userId={userId} status="SENT" />
+                <div className="text-xl">Pending</div>
+                <DonationsContainer userId={userId} status="PENDING" />
             </div>
         </div>
     );
