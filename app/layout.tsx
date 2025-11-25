@@ -5,6 +5,7 @@ import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -34,6 +35,9 @@ export default function RootLayout({
                     <div id="container" className="h-dvh flex p-4">
                     {children}
                     </div>
+                    <footer>
+                        <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
+                    </footer>
                 </body>
             </html>
         </ClerkProvider>
