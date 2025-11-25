@@ -5,7 +5,7 @@ export default async function Donor() {
   const user = await currentUser();
   return (
     <div>
-      <div className="h-screen w-screen flex justify-center">
+      <div className="w-screen flex justify-center">
         <p id="welcome-message">Welcome, {user?.firstName}</p>
       </div>
       <Card />
