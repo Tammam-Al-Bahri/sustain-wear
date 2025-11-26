@@ -13,12 +13,16 @@ export default function CreateCharityForm() {
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
         startTransition(async () => {
             const result = await createCharityAction(formData);
             if (result?.error) setMessage(result.error);
-            else setMessage("Created!");
+            else {
+                form.reset();
+                setMessage("Created!");
+            }
         });
     }
 
