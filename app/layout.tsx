@@ -32,7 +32,7 @@ export default function RootLayout({
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <Header />
                     <br />
-                    <div id="container" className="h-dvh flex p-4">
+                    <div id="container" className="h-dvh flex p-4 justify-center items-start">
                     {children}
                     </div>
                     <footer>
