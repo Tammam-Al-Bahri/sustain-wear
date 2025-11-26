@@ -76,12 +76,7 @@ export default async function CharityCard({
                     </AccordionItem>
                 </Accordion>
 
-                {isAdmin && (
-                    <div>
-                        Charity status: {status.toLowerCase().replace("_", " ")}
-                        <UpdateCharityStatus charityId={id} status={status} />
-                    </div>
-                )}
+                {isAdmin && <UpdateCharityStatus charityId={id} status={status} />}
             </CardContent>
         </Card>
     );
