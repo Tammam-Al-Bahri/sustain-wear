@@ -9,11 +9,13 @@ export async function createItem(
     type: ItemType,
     category: ItemCategory,
     condition: ItemCondition,
-    status: ItemStatus
+    status: ItemStatus,
+    imageUrls?: string[]
 ) {
     return await prisma.item.create({
         data: {
             userId,
+            imageUrls,
             name,
             description,
             size,

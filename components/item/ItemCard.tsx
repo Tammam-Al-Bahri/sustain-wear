@@ -16,8 +16,19 @@ export default function ItemCard({
     selected?: boolean;
     onSelect?: (id: string) => void;
 }) {
-    const { id, userId, name, description, size, type, category, condition, status, createdAt } =
-        item;
+    const {
+        id,
+        userId,
+        imageUrls,
+        name,
+        description,
+        size,
+        type,
+        category,
+        condition,
+        status,
+        createdAt,
+    } = item;
 
     return (
         <Card
@@ -35,6 +46,11 @@ export default function ItemCard({
             </CardHeader>
 
             <CardContent>
+                <div>
+                    {imageUrls.map((url) => (
+                        <img key={url} src={url} />
+                    ))}
+                </div>
                 <CardDescription>Description: {description}</CardDescription>
                 <CardDescription>Size: {size.replace("_", " ")}</CardDescription>
                 <CardDescription>Type: {type.toLowerCase().replace("_", " ")}</CardDescription>

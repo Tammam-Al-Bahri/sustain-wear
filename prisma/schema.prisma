@@ -50,6 +50,7 @@ model Membership {
 model Item {
   id          String        @id @default(cuid())
   userId      String
+  imageUrls   String[]
   name        String
   description String
   size        ItemSize

@@ -2,13 +2,16 @@
 
 import { useTransition, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createItemAction } from "@/app/actions/createItem";
 import { Combobox } from "@/components/combobox";
 import { ItemCategory, ItemCondition, ItemSize, ItemType } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 
 export default function CreateItemForm() {
+    const [imageUrls, setImageUrls] = useState<string[]>([]);
+    const [isUploading, setIsUploading] = useState(false);
+
     const [selectedSize, setSelectedSize] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -20,18 +23,28 @@ export default function CreateItemForm() {
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
         startTransition(async () => {
             const result = await createItemAction(
                 formData,
+                imageUrls,
                 selectedSize as ItemSize,
                 selectedType as ItemType,
                 selectedCategory as ItemCategory,
                 selectedCondition as ItemCondition
             );
             if (result?.error) setMessage(result.error);
-            else setMessage("Created!");
+            else {
+                setImageUrls([]);
+                setSelectedSize("");
+                setSelectedType("");
+                setSelectedCategory("");
+                setSelectedCondition("");
+                form.reset();
+                setMessage("Created!");
+            }
         });
     }
 
@@ -42,7 +55,35 @@ export default function CreateItemForm() {
                     <CardTitle>List New Item</CardTitle>
                 </CardHeader>
                 <CardContent>
+                    <div>
+                        {imageUrls.map((url) => (
+                            <img key={url} src={url} />
+                        ))}
+                    </div>
+
                     <form onSubmit={onSubmit} className="flex flex-col gap-4">
+                        <CardDescription>
+                            {isUploading ? "Uploading..." : "Upload images"}
+                            <Input
+                                type="file"
+                                disabled={isUploading}
+                                onChange={async (e) => {
+                                    const file = e.target.files?.[0] as File;
+
+                                    setIsUploading(true);
+
+                                    const data = new FormData();
+                                    data.set("file", file);
+                                    const response = await fetch("/api/files", {
+                                        method: "POST",
+                                        body: data,
+                                    });
+                                    const { url } = await response.json();
+                                    setImageUrls((prev) => [...prev, url]);
+                                    setIsUploading(false);
+                                }}
+                            />
+                        </CardDescription>
                         <Input name="name" type="text" placeholder="Name" />
                         <Input name="description" type="text" placeholder="Description" />
                         <Combobox

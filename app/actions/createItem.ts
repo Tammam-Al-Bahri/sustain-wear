@@ -6,6 +6,7 @@ import getCurrentUserIdAction from "./getCurrentUserId";
 
 export async function createItemAction(
     formData: FormData,
+    imageUrls: string[],
     size: ItemSize,
     type: ItemType,
     category: ItemCategory,
@@ -29,7 +30,8 @@ export async function createItemAction(
         type,
         category,
         condition,
-        "LISTED"
+        "LISTED",
+        imageUrls
     );
     if (!item) return { error: "Could not create item" };
 }
