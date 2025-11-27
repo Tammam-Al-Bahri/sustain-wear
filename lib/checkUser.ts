@@ -23,7 +23,7 @@ export const checkUser = async () => {
     const newUser = await prisma.user.create({
         data: {
             clerkId: user.id,
-            name: `${user.firstName} ${user.lastName}`,
+            name: `${user.firstName} ${user.lastName ?? ""}`,
             imageUrl: user.imageUrl,
             email: user.emailAddresses[0].emailAddress,
         },
