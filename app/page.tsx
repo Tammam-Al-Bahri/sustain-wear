@@ -1,27 +1,14 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { DashCard } from "@/components/ui/dashcard";
+// app/page.tsx
+import { Metadata } from "next";
+import ClientPage from "./page-client";
+
+export const metadata: Metadata = {
+  title: "SustainWear",
+  description: "SustainWear Home Page",
+};
 
 export default function Home() {
-    return (
-        <main>
-            <div className="flex flex-col gap-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                    <DashCard                        
-                    title="Total Consumption"
-                    value={`500 kWh`}
-                    />
-                    <DashCard
-                    title="Total Active Connections"
-                    value={`$100`}
-                    />
-                    <DashCard 
-                    title="Total Active Connections" 
-                    value={`100`} 
-                    />
-                </div>
-            </div>
-        </main>
-    );
+  return <ClientPage />;
 }
+
 

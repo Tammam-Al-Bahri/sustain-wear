@@ -7,9 +7,7 @@ export default async function Donor() {
     <div>
       <div className="w-screen flex justify-center">
         <p id="welcome-message">Welcome, {user?.firstName}</p>
-      </div>
-      <Card />
-      <h2>Donor</h2>
+      </div>    
     </div>
   );
 }
