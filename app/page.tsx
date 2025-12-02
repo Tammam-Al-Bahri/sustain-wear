@@ -1,21 +1,14 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+// app/page.tsx
+import { Metadata } from "next";
+import ClientPage from "./page-client";
+
+export const metadata: Metadata = {
+  title: "SustainWear",
+  description: "SustainWear Home Page",
+};
 
 export default function Home() {
-    return (
-        <main>
-            <div className="grid grid-cols-3 gap-4">
-                <div className="h-dvh flex p-4">
-                    Hello
-                </div>
-                 <div>
-                    Hello
-                </div>
-                 <div>
-                    Hello
-                </div>
-            </div>
-        </main>
-    );
+  return <ClientPage />;
 }
+
 
