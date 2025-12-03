@@ -1,12 +1,10 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { createMembership } from "@/lib/db/membership";
-import { getUserIdFromClerkId } from "@/lib/db/user";
+import getCurrentUserIdAction from "./getCurrentUserId";
 
 export async function createMembershipAction(charityId: string) {
-    const clerkUser = await currentUser();
-    const userId = await getUserIdFromClerkId(clerkUser?.id);
+    const { userId } = await getCurrentUserIdAction();
     if (!userId) return { error: "Not authenticated" };
 
     const membership = await createMembership(userId, charityId);

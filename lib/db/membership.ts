@@ -38,6 +38,7 @@ export async function listMemberships(
             charity: {
                 select: {
                     name: true,
+                    id: true,
                 },
             },
             user: {

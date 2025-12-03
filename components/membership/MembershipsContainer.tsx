@@ -1,5 +1,3 @@
-// components/memberships/MembershipsContainer.tsx
-
 import { currentUser } from "@clerk/nextjs/server";
 import { getUserIdFromClerkId } from "@/lib/db/user";
 import { listMemberships } from "@/lib/db/membership";
@@ -19,6 +17,6 @@ export default async function MembershipsContainer({
     const memberships = await listMemberships(charityId ? undefined : userId, charityId, status);
 
     if (!userId) return <div>Not authenticated</div>;
-
+    if (memberships.length === 0) return <div>none</div>;
     return <MembershipsList memberships={memberships} currentUserId={userId} />;
 }

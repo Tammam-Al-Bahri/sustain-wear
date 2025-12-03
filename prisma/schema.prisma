@@ -22,6 +22,9 @@ model User {
 
   // a user can create many charities
   charities Charity[]
+
+  // a user can list many items
+  items Item[]
 }
 
 model Charity {
@@ -32,6 +35,7 @@ model Charity {
 
   name String
   description String
+  address String
   status CharityStatus @default(PENDING_APPROVAL)
 
   createdAt DateTime @default(now())
@@ -66,7 +70,16 @@ model Membership {
 model Item {
   id String  @id @default(cuid())
 
-  // TODO: size, gender, type, etc...
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  name String
+  description String
+
+  size ItemSize
+  type ItemType
+  category ItemCategory
+  condition ItemCondition
 
   status ItemStatus @default(UNLISTED)
 
@@ -106,6 +119,36 @@ enum MembershipRole {
 enum MembershipStatus {
   PENDING_APPROVAL
   ACTIVE
+}
+
+enum ItemSize {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+enum ItemType {
+  SHIRT
+  TROUSERS
+  JACKET
+  SHOES
+  ACCESSORY
+}
+
+enum ItemCategory {
+  MENS
+  WOMENS
+  UNISEX
+  KIDS
+}
+
+enum ItemCondition {
+  NEW
+  GOOD
+  FAIR
 }
 
 enum ItemStatus {

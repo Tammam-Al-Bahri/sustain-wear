@@ -32,6 +32,7 @@ export default function CreateCharityForm() {
                     <form onSubmit={onSubmit} className="flex flex-col gap-4">
                         <Input name="name" type="text" placeholder="Name" />
                         <Input name="description" type="text" placeholder="Description" />
+                        <Input name="address" type="text" placeholder="Address" />
                         <Button type="submit" disabled={isPending}>
                             {isPending ? "Creating..." : "Create"}
                         </Button>

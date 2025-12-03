@@ -1,12 +1,14 @@
 import CreateCharityForm from "@/components/charity/CreateCharityForm";
-import { getUserIdFromClerkId } from "@/lib/db/user";
-import { currentUser } from "@clerk/nextjs/server";
 import CharitiesContainer from "@/components/charity/CharitiesContainer";
 import MembershipsContainer from "@/components/membership/MembershipsContainer";
+import CreateItemForm from "@/components/item/CreateItemForm";
+import ItemsContainer from "@/components/item/ItemsContainer";
+import { ItemCategory, ItemCondition, ItemSize, ItemType } from "@prisma/client";
+import getCurrentUserIdAction from "@/app/actions/getCurrentUserId";
 
 export default async function Test() {
-    const clerkUser = await currentUser();
-    const userId = await getUserIdFromClerkId(clerkUser?.id);
+    const { userId } = await getCurrentUserIdAction();
+
     return (
         <div className="flex gap-4">
             <div className="flex-col w-full">
@@ -28,7 +30,7 @@ export default async function Test() {
             </div>
 
             <div className="flex-col w-full">
-                <div className="text-2xl">Your Memberships</div>
+                <div className="text-2xl">Joined Charities (Memberships)</div>
                 <div className="text">All your Memberships</div>
                 <MembershipsContainer />
                 <div className="text">Your Active Memberships</div>

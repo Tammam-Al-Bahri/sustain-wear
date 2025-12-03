@@ -1,22 +1,20 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { createCharity } from "@/lib/db/charity";
-import { getUserIdFromClerkId } from "@/lib/db/user";
+import getCurrentUserIdAction from "./getCurrentUserId";
 
 export async function createCharityAction(formData: FormData) {
-    const user = await currentUser();
-    if (!user) return { error: "Not authenticated" };
-    const userId = await getUserIdFromClerkId(user.id);
+    const { userId } = await getCurrentUserIdAction();
     if (!userId) return { error: "Not authenticated" };
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
+    const address = formData.get("address") as string;
 
-    if (!name || !description) {
+    if (!name || !description || !address) {
         return { error: "Missing fields" };
     }
-    const charity = await createCharity(userId, name, description);
+    const charity = await createCharity(userId, name, description, address);
     if (!charity) {
         return { error: "Could not create charity" };
     }
