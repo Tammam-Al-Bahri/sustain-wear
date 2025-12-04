@@ -176,18 +176,20 @@ body {
   padding: 25px;
 }
 #container {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
+  background: linear-gradient(to bottom, #dcead9, rgb(235, 248, 235));
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.3);
+  background-clip: padding-box;
+  border-radius: 15px;
   height: 100vh;
   
 }
 header {
-  background: linear-gradient(to right, white, #99D591);
-  border-radius: 25px;
-  stroke: white;
-  stroke-width: 4px;
-
+  background: linear-gradient(to right, white, #A2C59D);
+  border-radius: 22px;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.3);
+  background-clip: padding-box;
 }
+
 header p {
   margin-right:auto;
   font-size: 28px;
