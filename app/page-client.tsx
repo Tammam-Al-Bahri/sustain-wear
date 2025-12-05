@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SignUpButton } from "@clerk/nextjs";
 
 interface Card {
   title: string;
@@ -56,9 +57,11 @@ export default function ClientPage() {
             ))}
           </div>
 
-          <Button className="h-full py-3 w-[300px] rounded-[15px] bg-[#254D28] shadow-[0px_0px_0px_4px_rgba(37,77,40,0.1)] border- text-[#E5F7E5] text-[20px] font-bold">
-            Start Donating
-          </Button>
+          <SignUpButton>
+            <Button className="h-full click py-3 w-[300px] rounded-[15px] bg-[#254D28] shadow-[0px_0px_0px_4px_rgba(37,77,40,0.1)] border- text-[#E5F7E5] text-[20px] font-bold">
+              Start Donating
+            </Button>
+          </SignUpButton>
         </div>
 
         <div className="flex flex-col gap-6 items-center">
