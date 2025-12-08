@@ -3,6 +3,7 @@ import { DashCard } from "@/components/ui/dashcard";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
+{/* logic to get the data from the database and display it on the cards */}
 export default function ClientPage() {
   const { user } = useUser();
 
@@ -25,17 +26,18 @@ export default function ClientPage() {
     return (
         <main>
             <div>
+                {/* personalised welcome message for user */}
                 <div className="w-screen flex justify-center">
                     <p id="welcome-message">Welcome, {user?.firstName}</p>
                 </div>
                 <br />
             </div>
-            <div className="flex flex-col gap-4">
+            {/* shows data on cards for users to see */}
+            <div className="h-dvh flex p-4 justify-center items-start">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <DashCard
                         title="Total Donors"
                         value={donorCount !== null ? String(donorCount) : "Loading..."}
-
                     />
                     <DashCard
                         title="Total Donations"
