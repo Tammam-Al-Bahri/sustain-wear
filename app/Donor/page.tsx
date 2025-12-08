@@ -1,15 +1,52 @@
-import { Card } from "@/components/ui/card"
-import { currentUser } from "@clerk/nextjs/server";
-import ClientPage from "../page-client";
-import { Metadata } from "next";
+"use client";
+import { DashCard } from "@/components/ui/dashcard";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
-export const metadata: Metadata = {
-  title: "SustainWear Donor",
-  description: "Donor Home Page",
-};
+export default function ClientPage() {
+  const { user } = useUser();
 
-export default async function Donor() {
-  const user = await currentUser();
-  return (<ClientPage />
-  );
+  const [donorCount, setDonorCount] = useState<number | null>(null);
+  const [donationCount, setDonationCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    async function fetchCounts() {
+      const donorRes = await fetch("/api/files/user-count");
+      const donorData = await donorRes.json();
+      setDonorCount(donorData.count);
+
+      const donationRes = await fetch("/api/files/items-count");
+      const donationData = await donationRes.json();
+      setDonationCount(donationData.count);
+    }
+    fetchCounts();
+  }, []);
+
+    return (
+        <main>
+            <div>
+                <div className="w-screen flex justify-center">
+                    <p id="welcome-message">Welcome, {user?.firstName}</p>
+                </div>
+                <br />
+            </div>
+            <div className="flex flex-col gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                    <DashCard
+                        title="Total Donors"
+                        value={donorCount !== null ? String(donorCount) : "Loading..."}
+
+                    />
+                    <DashCard
+                        title="Total Donations"
+                        value={donationCount !== null ? String(donationCount) : "Loading..."}
+                    />
+                    <DashCard 
+                        title="Total Active Connections" 
+                        value={'100'} 
+                    />
+                </div>
+            </div>
+        </main>
+    );
 }

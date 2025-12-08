@@ -1,6 +1,4 @@
-// app/page.tsx
 import { Metadata } from "next";
-import ClientPage from "./page-client";
 
 export const metadata: Metadata = {
   title: "SustainWear",
