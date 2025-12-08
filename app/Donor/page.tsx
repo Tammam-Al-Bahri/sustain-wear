@@ -44,7 +44,7 @@ export default function ClientPage() {
                         value={donationCount !== null ? String(donationCount) : "Loading..."}
                     />
                     <DashCard 
-                        title="Total Active Connections" 
+                        title="Total Collaborating Charities" 
                         value={'100'} 
                     />
                 </div>

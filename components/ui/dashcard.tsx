@@ -5,9 +5,11 @@ export function DashCard({title, value}: {title: string, value: string}) {
         <Card>
             <CardContent >
                 <CardTitle>
-                    {title}
+                    <div className="text-center mb-2">
+                        {title}
+                    </div>
                 </CardTitle>
-                <div className="text-xl font-bold">
+                <div className="text-xl font-bold justify-center flex mt-4">
                     {value}
                 </div>
             </CardContent>
