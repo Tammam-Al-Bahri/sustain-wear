@@ -9,6 +9,7 @@ export default function ClientPage() {
 
   const [donorCount, setDonorCount] = useState<number | null>(null);
   const [donationCount, setDonationCount] = useState<number | null>(null);
+  const [charityCount, setCharityCount] = useState<number | null>(null);
 
   useEffect(() => {
     async function fetchCounts() {
@@ -19,6 +20,10 @@ export default function ClientPage() {
       const donationRes = await fetch("/api/files/items-count");
       const donationData = await donationRes.json();
       setDonationCount(donationData.count);
+
+        const charityRes = await fetch("/api/files/charity-count");
+        const charityData = await charityRes.json();
+        setCharityCount(charityData.count);
     }
     fetchCounts();
   }, []);
@@ -45,7 +50,7 @@ export default function ClientPage() {
                     />
                     <DashCard 
                         title="Total Collaborating Charities" 
-                        value={'100'} 
+                        value={charityCount !== null ? String(charityCount) : "Loading..."} 
                     />
                 </div>
             </div>

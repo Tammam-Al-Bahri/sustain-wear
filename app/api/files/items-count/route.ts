@@ -2,6 +2,6 @@
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
-  const count = await prisma.donation.count(); // assuming table is Donation
+  const count = await prisma.donation.count(); 
   return Response.json({ count });
 }
