@@ -9,13 +9,16 @@ export default async function Header() {
     const user = await checkUser();
     return (
         <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <p>SustainWear</p>
+             {/* TODO: Make the 'SustainWear' text redirect you to options below when pressed :
+             the landing page (if not logged in) or
+             the dashboard (if logged in) */}
+            <p className="font-bold text-lg text-[#274D22]">SustainWear</p>
             <SignedOut>
                 <SignInButton>
-                    <Button>Log in</Button>
+                    <Button variant="outline" className="px-8 font-semibold border rounded-[15px] border-white border-opacity-30" >Log in</Button>
                 </SignInButton>
                 <SignUpButton>
-                    <Button>Sign Up</Button>
+                    <Button className="px-8 font-semibold border rounded-[15px] border-white border-opacity-30">Sign Up</Button>
                 </SignUpButton>
             </SignedOut>
             <SignedIn>
