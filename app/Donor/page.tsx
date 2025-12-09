@@ -2,6 +2,7 @@
 import { DashCard } from "@/components/ui/dashcard";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import BarChart from "@/components/barchart";
 
 {/* logic to get the data from the database and display it on the cards */}
 export default function ClientPage() {
@@ -52,6 +53,11 @@ export default function ClientPage() {
                         title="Total Collaborating Charities" 
                         value={charityCount !== null ? String(charityCount) : "Loading..."} 
                     />
+                </div>
+            </div>
+            <div>
+                <div>
+                    <BarChart />
                 </div>
             </div>
         </main>
