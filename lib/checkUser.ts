@@ -18,9 +18,6 @@ export const checkUser = async () => {
     if (loggedInUser) {
         return loggedInUser;
     }
-    if (!loggedInUser) {
-        return null;
-    }
 
     // if not in db, create new user
     const newUser = await prisma.user.create({
