@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
-
+import { ThemeProvider } from "@/components/theme-provider"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -32,8 +32,15 @@ export default function RootLayout({
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <Header />
                     <br />
-                    <div id="container" className="h-dvh flex p-4 justify-center items-start">
-                    {children}
+                    <div id="container" className="h-full flex p-4 justify-center items-start">
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="system"
+                            enableSystem
+                            disableTransitionOnChange
+                            >
+                            {children}
+                        </ThemeProvider>              
                     </div>
                     <footer>
                         <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>

@@ -1,156 +1,413 @@
 
 .settings-page-wrapper {
-  background: #050b10;
   min-height: 100vh;
-  padding: 32px 0;
-  color: #e2e2e2;
+  padding: 32px 0 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, #d8f5dc 0%, #bfe3c6 40%, #274b33 100%);
 }
 
 
-.settings-container {
-  width: min(1100px, 90%);
-  background: #121c22;
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-}
 
-
-.settings-nav {
+.settings-topbar {
+  width: min(1150px, 94%);
   margin-bottom: 18px;
-  padding: 12px 18px;
-  background: #090f13;
-  border-radius: 12px;
+  background: linear-gradient(90deg, #6ad47a, #c4ffb8);
+  border-radius: 22px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
 }
 
-.settings-nav ul {
-  list-style: none;
+.settings-brand {
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  color: #05250f;
+}
+
+.settings-top-links {
   display: flex;
   gap: 24px;
-  padding: 0;
-  margin: 0;
+  font-size: 0.9rem;
 }
 
-.settings-nav a {
-  color: #9fe6c3;
-  font-size: 1.05rem;
+.settings-top-links a {
+  color: #07371a;
   text-decoration: none;
   font-weight: 600;
 }
 
-.settings-nav a:hover {
-  color: #ffffff;
+.settings-top-links a:hover {
   text-decoration: underline;
 }
 
+.settings-top-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-pill {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 16px;
+  background: #050b10;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-pill.secondary {
+  background: transparent;
+  color: #05250f;
+  border: 2px solid #05250f;
+}
+
+.btn-pill:hover {
+  filter: brightness(1.05);
+}
+
+
+
+.settings-container {
+  width: min(1150px, 94%);
+  background: #f7fff8;
+  border-radius: 26px;
+  padding: 22px 24px 26px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+  border: 1px solid #a5d8af;
+  color: #082212;
+}
+
+
 
 .settings-header {
-  background: linear-gradient(90deg, #62e07e, #b4ffae);
-  color: #052014;
-  border-radius: 14px;
-  padding: 16px 22px;
-  margin-bottom: 22px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #baf4be, #e5ffe7);
+  margin-bottom: 18px;
 }
 
 .settings-header h1 {
-  font-size: 1.6rem;          
   margin: 0 0 6px 0;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #08311a;
 }
 
 .settings-header p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  color: #365342;
 }
+
+.settings-tagline {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(8, 49, 26, 0.18);
+  font-size: 0.85rem;
+  color: #31503c;
+}
+
+
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+@media (max-width: 880px) {
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 .section {
-  margin-top: 22px;
-  background: #1b242b;
-  padding: 18px 20px;
-  border-radius: 12px;
+  background: #f0fff3;
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  border: 1px solid #c3e8cc;
+  margin-bottom: 14px;
 }
 
 .section h2 {
-  color: #76d67f;
-  font-size: 1.2rem;
-  margin-top: 0;
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0c3d21;
 }
+
+.section p,
+.section small {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #526a59;
+}
+
+.section-divider {
+  margin: 14px 0 10px;
+  border: none;
+  border-top: 1px dashed #c3e8cc;
+}
+
+
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.theme-card {
+  border-radius: 14px;
+  padding: 10px 12px 12px;
+  border: 1px solid #c5e7cf;
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(58, 104, 71, 0.25);
+}
+
+.theme-card.active {
+  border-color: #2e9851;
+  box-shadow: 0 0 0 2px rgba(46, 152, 81, 0.2), 0 8px 22px rgba(46, 152, 81, 0.35);
+}
+
+.theme-chip {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #eaf7ee;
+  color: #226538;
+  font-weight: 600;
+}
+
+.theme-title {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #10381f;
+}
+
+.theme-desc {
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: #5a7463;
+}
+
+.theme-preview {
+  display: flex;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.theme-bar {
+  flex: 1;
+  height: 7px;
+  border-radius: 999px;
+}
+
+.theme-bar.light-1 {
+  background: #ffffff;
+}
+.theme-bar.light-2 {
+  background: #dff7e3;
+}
+.theme-bar.light-3 {
+  background: #b4e7bc;
+}
+
+.theme-bar.dark-1 {
+  background: #050b10;
+}
+.theme-bar.dark-2 {
+  background: #1a2a33;
+}
+.theme-bar.dark-3 {
+  background: #32424c;
+}
+
+.theme-bar.contrast-1 {
+  background: #000000;
+}
+.theme-bar.contrast-2 {
+  background: #ffffff;
+}
+.theme-bar.contrast-3 {
+  background: #00ff72;
+}
+
+.btn-theme-apply {
+  margin-top: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #2f9852;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 
 
 .field-group {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
-label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 500;
+.field-label-main {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #23402c;
+  margin-bottom: 2px;
 }
 
-select {
-  width: 260px;
+.field-label-sub {
+  font-size: 0.8rem;
+  color: #647a69;
+  margin-bottom: 6px;
+}
+
+.settings-select {
+  width: 100%;
   padding: 8px 10px;
-  border-radius: 8px;
-  border: 1px solid #3d4b55;
-  background: #10171c;
-  color: #f0f0f0;
+  border-radius: 10px;
+  border: 1px solid #c4e3cc;
+  background: #ffffff;
+  color: #203424;
+  font-size: 0.9rem;
 }
+
 
 
 .checkbox-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #223526;
+}
+
+.checkbox-text {
+  max-width: 70%;
+}
+
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background-color: #c4d5c9;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  width: 16px;
+  height: 16px;
+  left: 4px;
+  top: 3px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+  background-color: #2f9852;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+
+
+.settings-save-bar {
   margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid #c5e8cf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
-
-.checkbox-row input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-}
-
 
 .save-btn {
-  margin-top: 26px;
-  background: #76d67f;
-  padding: 14px 20px;
+  padding: 10px 24px;
+  border-radius: 999px;
   border: none;
-  border-radius: 10px;
+  background: linear-gradient(90deg, #2f9852, #66cf85);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.92rem;
   cursor: pointer;
-  color: #000;
-  font-weight: 700;
-  width: 100%;
-  font-size: 1rem;
+  box-shadow: 0 8px 20px rgba(34, 104, 60, 0.35);
 }
 
 .save-btn:hover {
-  background: #5ec267;
+  filter: brightness(1.05);
 }
-
 
 .save-message {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  color: #9fe6c3;
+  font-size: 0.85rem;
+  color: #1c6d3b;
 }
+
 
 
 .settings-footer {
   margin-top: 16px;
-  color: #8f9aa3;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  color: #e4ffe9;
 }
 
 
+
+body.theme-light {
+  background: #f5fff8;
+  color: #081b10;
+}
+
 body.theme-dark {
   background: #050b10;
+  color: #f0f5f2;
 }
 
 body.theme-high-contrast {
   background: #000;
-  color: #ffffff;
+  color: #fff;
 }
+
