@@ -3,107 +3,78 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgres"
 }
 
 model User {
-  id       String  @id @default(cuid())
-  clerkId  String  @unique // from clerk
-  email    String  @unique // from clerk
-  name     String?         // from clerk
-  imageUrl String?         // from clerk
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // a user can have many memberships (can be staff for many charities)
+  id          String       @id @default(cuid())
+  clerkId     String       @unique
+  email       String       @unique
+  name        String?
+  imageUrl    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  charities   Charity[]
+  items       Item[]
   memberships Membership[]
-
-  // a user can create many charities
-  charities Charity[]
-
-  // a user can list many items
-  items Item[]
 }
 
 model Charity {
-  id String  @id @default(cuid())
-
-  user User @relation(fields: [creatorId], references: [id])
-  creatorId String
-
-  name String
+  id          String        @id @default(cuid())
+  creatorId   String
+  name        String
   description String
-  address String
-  status CharityStatus @default(PENDING_APPROVAL)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // a charity can have many memberships (the staff)
+  address     String
+  status      CharityStatus @default(PENDING_APPROVAL)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [creatorId], references: [id])
+  donations   Donation[]
   memberships Membership[]
-  // a charity can have many donations
-  donations Donation[]
 }
 
 model Membership {
-  id String  @id @default(cuid())
-
-  // a membership must have one user (the charity staff)
-  user User @relation(fields: [userId], references: [id])
-  userId String
-
-  // a membership must have one charity
-  charity Charity @relation(fields: [charityId], references: [id])
+  id        String           @id @default(cuid())
+  userId    String
   charityId String
-
-  role MembershipRole @default(STAFF)
-  status MembershipStatus @default(PENDING_APPROVAL)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      MembershipRole   @default(STAFF)
+  status    MembershipStatus @default(PENDING_APPROVAL)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  charity   Charity          @relation(fields: [charityId], references: [id])
+  user      User             @relation(fields: [userId], references: [id])
 
   @@unique([userId, charityId])
 }
 
 model Item {
-  id String  @id @default(cuid())
-
-  user User @relation(fields: [userId], references: [id])
-  userId String
-
-  name String
-  description String
-
-  size ItemSize
-  type ItemType
-  category ItemCategory
-  condition ItemCondition
-
-  status ItemStatus @default(UNLISTED)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  donation Donation? // an item can have one donation
+  id          String        @id @default(cuid())
+  userId      String
+  imageUrls   String[]
+  name        String
+  description String?
+  mass        Float
+  material    ItemMaterial
+  size        ItemSize
+  type        ItemType
+  category    ItemCategory
+  condition   ItemCondition
+  status      ItemStatus    @default(UNLISTED)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  donation    Donation?
+  user        User          @relation(fields: [userId], references: [id])
 }
 
 model Donation {
-  id String  @id @default(cuid())
-
-  // a donation must have one item
-  item Item @relation(fields: [itemId], references: [id])
-  itemId String @unique
-  
-  // a donation must have one charity
-  charity Charity @relation(fields: [charityId], references: [id])
+  id        String         @id @default(cuid())
+  itemId    String         @unique
   charityId String
-
-  status DonationStatus @default(PENDING)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status    DonationStatus @default(PENDING)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  charity   Charity        @relation(fields: [charityId], references: [id])
+  item      Item           @relation(fields: [itemId], references: [id])
 }
 
 enum CharityStatus {
@@ -155,6 +126,13 @@ enum ItemStatus {
   UNLISTED
   LISTED
   CLAIMED
+}
+
+enum ItemMaterial {
+  COTTON
+  WOOL
+  POLYESTER
+  LEATHER
 }
 
 enum DonationStatus {

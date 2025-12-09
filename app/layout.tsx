@@ -5,6 +5,7 @@ import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -31,9 +32,12 @@ export default function RootLayout({
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <Header />
                     <br />
-                    <div id="container" className="h-dvh flex p-4">
+                    <div id="container" className="h-full flex p-4 justify-center items-start">
                     {children}
                     </div>
+                    <footer>
+                        <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
+                    </footer>
                 </body>
             </html>
         </ClerkProvider>

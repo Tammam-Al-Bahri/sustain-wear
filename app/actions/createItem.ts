@@ -1,11 +1,13 @@
 "use server";
 
 import { createItem } from "@/lib/db/item";
-import { ItemCategory, ItemCondition, ItemSize, ItemType } from "@prisma/client";
+import { ItemCategory, ItemCondition, ItemMaterial, ItemSize, ItemType } from "@prisma/client";
 import getCurrentUserIdAction from "./getCurrentUserId";
 
 export async function createItemAction(
     formData: FormData,
+    imageUrls: string[],
+    material: ItemMaterial,
     size: ItemSize,
     type: ItemType,
     category: ItemCategory,
@@ -16,8 +18,9 @@ export async function createItemAction(
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
+    const mass = Number.parseFloat(formData.get("mass") as string);
 
-    if (!name || !description || !size || !type || !category || !condition) {
+    if (!name || !mass || !material || !size || !type || !category || !condition) {
         return { error: "Missing fields" };
     }
 
@@ -25,11 +28,14 @@ export async function createItemAction(
         userId,
         name,
         description,
+        mass,
+        material,
         size,
         type,
         category,
         condition,
-        "LISTED"
+        "LISTED",
+        imageUrls
     );
     if (!item) return { error: "Could not create item" };
 }

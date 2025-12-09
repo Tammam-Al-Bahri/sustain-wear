@@ -20,6 +20,11 @@ export default async function DonationCard({
                 <CardDescription>Charity: {charity.name}</CardDescription>
             </CardHeader>
             <CardContent>
+                <div>
+                    {item.imageUrls.map((url: string) => (
+                        <img key={url} src={url} />
+                    ))}
+                </div>
                 <CardDescription>Status: {status.toLowerCase()}</CardDescription>
                 {status === "PENDING" && currentUserId === item.userId && (
                     <DonationButton donationId={id} status={status} />
