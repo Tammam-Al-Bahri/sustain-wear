@@ -9,7 +9,9 @@ export default function DonateButton() {
     if (pathname !== "/donor") return null;
     return (
         <Link href="/app/test/item/">
-            <Button className="bg-green-500 hover:bg-green-600 text-white">Donate</Button>
+            <Button className="bg-green-500 hover:bg-green-600 text-white">
+                Donate
+            </Button>
         </Link>
     );
 }
