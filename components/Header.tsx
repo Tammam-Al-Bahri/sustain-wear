@@ -3,6 +3,7 @@
 import { SignedOut, SignInButton, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { checkUser } from "@/lib/checkUser";
+import DonationHeaderButton from "./donation/DonationHeaderButton";
 
 export default async function Header() {
     const user = await checkUser();
@@ -18,6 +19,7 @@ export default async function Header() {
                 </SignUpButton>
             </SignedOut>
             <SignedIn>
+                <DonationHeaderButton />
                 <UserButton />
             </SignedIn>
         </header>
