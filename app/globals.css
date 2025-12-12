@@ -176,6 +176,7 @@ body {
   padding: 25px;
 }
 #container {
+  flex: auto;
   background: linear-gradient(to bottom, #d0e6cb, rgb(235, 248, 235));
   box-shadow: inset 0 0 0 4px rgba(255,255,255,0.3);
   background-clip: padding-box;
