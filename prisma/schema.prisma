@@ -52,7 +52,9 @@ model Item {
   userId      String
   imageUrls   String[]
   name        String
-  description String
+  description String?
+  mass        Float
+  material    ItemMaterial
   size        ItemSize
   type        ItemType
   category    ItemCategory
@@ -124,6 +126,13 @@ enum ItemStatus {
   UNLISTED
   LISTED
   CLAIMED
+}
+
+enum ItemMaterial {
+  COTTON
+  WOOL
+  POLYESTER
+  LEATHER
 }
 
 enum DonationStatus {

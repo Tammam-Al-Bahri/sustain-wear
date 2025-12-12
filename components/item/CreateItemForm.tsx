@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createItemAction } from "@/app/actions/createItem";
 import { Combobox } from "@/components/combobox";
-import { ItemCategory, ItemCondition, ItemSize, ItemType } from "@prisma/client";
+import { ItemCategory, ItemCondition, ItemMaterial, ItemSize, ItemType } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 
 export default function CreateItemForm() {
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [isUploading, setIsUploading] = useState(false);
 
+    const [selectedMaterial, setSelectedMaterial] = useState("");
     const [selectedSize, setSelectedSize] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -30,6 +31,7 @@ export default function CreateItemForm() {
             const result = await createItemAction(
                 formData,
                 imageUrls,
+                selectedMaterial as ItemMaterial,
                 selectedSize as ItemSize,
                 selectedType as ItemType,
                 selectedCategory as ItemCategory,
@@ -38,6 +40,7 @@ export default function CreateItemForm() {
             if (result?.error) setMessage(result.error);
             else {
                 setImageUrls([]);
+                setSelectedMaterial("");
                 setSelectedSize("");
                 setSelectedType("");
                 setSelectedCategory("");
@@ -86,6 +89,24 @@ export default function CreateItemForm() {
                         </CardDescription>
                         <Input name="name" type="text" placeholder="Name" />
                         <Input name="description" type="text" placeholder="Description" />
+                        <Input
+                            name="mass"
+                            type="number"
+                            placeholder="mass (kg)"
+                            min={0}
+                            step={0.01}
+                        />
+                        <Combobox
+                            label="Material*"
+                            items={[
+                                { value: "COTTON", label: "Cotton" },
+                                { value: "WOOL", label: "Wool" },
+                                { value: "POLYESTER", label: "Polyester" },
+                                { value: "LEATHER", label: "Leather" },
+                            ]}
+                            value={selectedMaterial}
+                            onValueChange={setSelectedMaterial}
+                        />
                         <Combobox
                             label="Size*"
                             items={[

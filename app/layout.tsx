@@ -34,15 +34,7 @@ export default function RootLayout({
                     <Header />
                     <br />
                     <div id="container" className="h-full flex p-4 justify-center items-start">
-                        <ThemeProvider
-                            attribute="class"
-                            defaultTheme="system"
-                            enableSystem
-                            disableTransitionOnChange
-                           ><AccessibilityProvider>
-                            {children}
-                            </AccessibilityProvider>
-                        </ThemeProvider>              
+                    {children}
                     </div>
                     <footer>
                         <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
