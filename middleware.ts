@@ -12,7 +12,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   //  1. If NOT logged in, allow homepage and block protected routes
   if (!userId) {
-    if (isAdminRoute(req) || isCharityRoute(req)) {
+    if (isAdminRoute(req) || isCharityRoute(req) || isDonorRoute(req)) {
       return NextResponse.redirect(new URL("/", req.url));
     }
     return NextResponse.next(); // allow access to home
