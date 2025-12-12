@@ -58,7 +58,6 @@ export default function Donor() {
             <div className="container mx-auto p-4 flex flex-col">
                 <div className="grid grid-cols-1 gap-20 p-4">
                     <BarChart />
-                    <BarChart />
                 </div>
             </div>
         </main>
