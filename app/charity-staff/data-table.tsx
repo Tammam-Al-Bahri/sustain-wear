@@ -72,7 +72,12 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpane={columns.length}>No results.</TableCell>
+              <TableCell
+                className="text-center border-r-4 border-b-4"
+                colSpan={columns.length}
+              >
+                No results.
+              </TableCell>
             </TableRow>
           )}
         </TableBody>

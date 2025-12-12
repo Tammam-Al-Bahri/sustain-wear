@@ -46,11 +46,11 @@ export const columns: ColumnDef<Donations>[] = [
       return (
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+            <Button variant="outline" className="w-[162px] rounded-5 border-3 border-[#83B47D] bg-[#CEE9CA]">
+              <span >Take action</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="start">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(donation.id)}
