@@ -2,10 +2,10 @@
 import { DashCard } from "@/components/ui/dashcard";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import BarChart from "@/components/barchart";
+import BarChart from "@/components/charts/DonationsBarChart";
 
 {/* logic to get the data from the database and display it on the cards */}
-export default function ClientPage() {
+export default function Donor() {
   const { user } = useUser();
 
   const [donorCount, setDonorCount] = useState<number | null>(null);
@@ -39,7 +39,7 @@ export default function ClientPage() {
                 <br />
             </div>
             {/* shows data on cards for users to see */}
-            <div className="h-dvh flex p-4 justify-center items-start">
+            <div className="flex p-4 justify-center items-start">
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     <DashCard
                         title="Total Donors"
@@ -55,8 +55,9 @@ export default function ClientPage() {
                     />
                 </div>
             </div>
-            <div>
-                <div>
+            <div className="container mx-auto p-4 flex flex-col">
+                <div className="grid grid-cols-1 gap-20 p-4">
+                    <BarChart />
                     <BarChart />
                 </div>
             </div>
