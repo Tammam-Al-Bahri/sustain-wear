@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { checkUser } from "@/lib/checkUser";
 import DonationHeaderButton from "./donation/DonationHeaderButton";
+import UserStatButton from "./UserStatButton";
 
 export default async function Header() {
     const user = await checkUser();
@@ -32,6 +33,7 @@ export default async function Header() {
 
                 <SignedIn>
                     <DonationHeaderButton />
+                    <UserStatButton />
                     <UserButton afterSignOutUrl="/" />
                 </SignedIn>
             </div>
