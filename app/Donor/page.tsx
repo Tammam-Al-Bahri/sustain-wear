@@ -4,30 +4,37 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import BarChart from "@/components/barchart";
 
-{/* logic to get the data from the database and display it on the cards */}
+{
+    /* logic to get the data from the database and display it on the cards */
+}
 export default function ClientPage() {
-  const { user } = useUser();
+    const { user } = useUser();
 
-  const [donorCount, setDonorCount] = useState<number | null>(null);
-  const [donationCount, setDonationCount] = useState<number | null>(null);
-  const [charityCount, setCharityCount] = useState<number | null>(null);
+    const [donorCount, setDonorCount] = useState<number | null>(null);
+    const [donationCount, setDonationCount] = useState<number | null>(null);
+    const [charityCount, setCharityCount] = useState<number | null>(null);
+    const [totalCO2, setTotalCO2] = useState<number | null>(null);
 
-  useEffect(() => {
-    async function fetchCounts() {
-      const donorRes = await fetch("/api/files/user-count");
-      const donorData = await donorRes.json();
-      setDonorCount(donorData.count);
+    useEffect(() => {
+        async function fetchCounts() {
+            const donorRes = await fetch("/api/files/user-count");
+            const donorData = await donorRes.json();
+            setDonorCount(donorData.count);
 
-      const donationRes = await fetch("/api/files/items-count");
-      const donationData = await donationRes.json();
-      setDonationCount(donationData.count);
+            const donationRes = await fetch("/api/files/items-count");
+            const donationData = await donationRes.json();
+            setDonationCount(donationData.count);
 
-        const charityRes = await fetch("/api/files/charity-count");
-        const charityData = await charityRes.json();
-        setCharityCount(charityData.count);
-    }
-    fetchCounts();
-  }, []);
+            const charityRes = await fetch("/api/files/charity-count");
+            const charityData = await charityRes.json();
+            setCharityCount(charityData.count);
+
+            const cO2Res = await fetch("/api/files/co2-emissions");
+            const cO2Data = await cO2Res.json();
+            setTotalCO2(cO2Data.total);
+        }
+        fetchCounts();
+    }, []);
 
     return (
         <main>
@@ -49,16 +56,18 @@ export default function ClientPage() {
                         title="Total Donations"
                         value={donationCount !== null ? String(donationCount) : "Loading..."}
                     />
-                    <DashCard 
-                        title="Total Collaborating Charities" 
-                        value={charityCount !== null ? String(charityCount) : "Loading..."} 
+                    <DashCard
+                        title="Total Collaborating Charities"
+                        value={charityCount !== null ? String(charityCount) : "Loading..."}
+                    />
+                    <DashCard
+                        title="Total CO₂ Emissions Saved"
+                        value={totalCO2 !== null ? String(totalCO2) + " kg CO₂" : "Loading..."}
                     />
                 </div>
             </div>
             <div>
-                <div>
-                    <BarChart />
-                </div>
+                <BarChart />
             </div>
         </main>
     );
