@@ -5,3 +5,4 @@ export async function GET() {
   const count = await prisma.donation.count(); 
   return Response.json({ count });
 }
+
