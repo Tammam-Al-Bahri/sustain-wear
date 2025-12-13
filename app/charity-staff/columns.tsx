@@ -1,4 +1,5 @@
 "use client";
+
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -10,14 +11,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import DonationButton from "@/components/donation/DonationButton";
+import { DonationStatus } from "@prisma/client";
 
 export type Donations = {
   id: string;
   charityId: string;
   donorName: string;
-  item: number;
-  date: string;
+  itemType: string;
+  size: string;
   status: string;
+  date: string;
 };
 
 export const columns: ColumnDef<Donations>[] = [
@@ -30,12 +34,16 @@ export const columns: ColumnDef<Donations>[] = [
     header: "Item Type",
   },
   {
-    accessorKey: "date",
-    header: "Date",
+    accessorKey: "size",
+    header: "Size",
   },
   {
     accessorKey: "status",
     header: "Status",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
   },
   {
     id: "actions",
@@ -44,7 +52,7 @@ export const columns: ColumnDef<Donations>[] = [
       const donation = row.original;
 
       return (
-        <DropdownMenu modal={false}  z-index={100}>
+        <DropdownMenu modal={false} z-index={100}>
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
@@ -61,8 +69,9 @@ export const columns: ColumnDef<Donations>[] = [
               Copy donation ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View donator</DropdownMenuItem>
-            <DropdownMenuItem>View donation details</DropdownMenuItem>
+            {donation.status === "SENT" && <DropdownMenuItem asChild>
+              <DonationButton donationId={donation.id} status={donation.status as DonationStatus} />
+            </DropdownMenuItem>}
           </DropdownMenuContent>
         </DropdownMenu>
       );

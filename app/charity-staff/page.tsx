@@ -65,7 +65,8 @@ export default function CharityStaff() {
           id: String(r.id),
           charityId: r.charityId,
           donorName: r.item.user.name,
-          item: r.item.itemType,
+          itemType: r.item.type,
+          size: r.item.size,
           date: new Date(r.createdAt).toDateString(),
           status: r.status,
         }));
@@ -89,11 +90,37 @@ export default function CharityStaff() {
     load();
   }, []);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+  const pendingDonations = donations.filter(
+    d => d.status === "PENDING"
+  ).length;
+
+  const itemsClaimedToday = donations.filter(d => {
+    if (!d.date) return false;
+    const dDate = new Date(d.date);
+    dDate.setHours(0, 0, 0, 0);
+    return d.status === "RECEIVED" && dDate.getTime() === today.getTime();
+  }).length;
+
+  const totalInventory = donations.filter(
+    d => d.status !== "SENT"
+  ).length;
+
+  const receivedThisMonth = donations.filter(d => {
+    if (!d.date) return false;
+    const dDate = new Date(d.date);
+    return d.status === "RECEIVED" && dDate >= startOfMonth;
+  }).length;
+
   const statistics = [
-    { title: "Awaiting reviews pending donations", stat: "2,200" },
-    { title: "Processed items approved today", stat: "15,000" },
-    { title: "Total items in the inventory", stat: "3,200" },
-    { title: "Items processed this month", stat: "150K" },
+    { title: "Pending donations", stat: pendingDonations.toString() },
+    { title: "Items claimed today", stat: itemsClaimedToday.toString() },
+    { title: "Total items in inventory", stat: totalInventory.toString() },
+    { title: "Items received this month", stat: receivedThisMonth.toString() },
   ];
 
   return (
@@ -104,7 +131,7 @@ export default function CharityStaff() {
         </h2>
       </section>
 
-      <section className="p-4 w-full bg-white">
+      <section className="p-4 w-full bg-white gap-[20px]">
         <div className="flex flex-col p-4 gap-5 rounded-[15px] border-4 border-[rgba(196,255,188,0.5)]">
           <div className="flex w-full flex-row gap-[55px] justify-center h-[123px]">
             {statistics.map((s) => (
@@ -124,11 +151,11 @@ export default function CharityStaff() {
             ))}
           </div>
 
-          <div className="flex flex-col gap-2 ">
+          <div className="flex flex-col gap-[20px]">
             <h1 className="font-bold text-[25px] w-full text-center">
               Donations Received
             </h1>
-            <Card>
+            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] h-full w-full rounded-[25px] px-[25px] py-5 border-4 border-[#83B47D] shadow-none">
               <Combobox
                 label="Charity*"
                 items={charities}

@@ -40,13 +40,13 @@ export function Combobox({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-[200px] justify-between bg-[#CCEBC7] text-[#274D22] hover:bg-[#bfe3b3] focus-visible:ring-2 focus-visible:ring-[#83B47D]"
                 >
                     {value ? items.find((item) => item.value === value)?.label : label}
                     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent className="w-[200px] p-0 bg-[#CCEBC7] text-[#274D22]">
                 <Command>
                     <CommandInput placeholder="Search..." />
                     <CommandList>

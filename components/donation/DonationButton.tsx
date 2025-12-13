@@ -17,21 +17,20 @@ export default function DonationButton({
 
     function onSubmit() {
         startTransition(async () => {
+            console.log(status);
             const nextStatus: DonationStatus =
                 status === "PENDING" ? "SENT" : status === "SENT" ? "RECEIVED" : "RECEIVED";
             const result = await updateDonationStatusAction(donationId, nextStatus);
             if (!result) setMessage("error");
-            else setMessage("Status updated!");
+            // else setMessage("Status updated!");
         });
     }
     return (
-        <div>
-            <Button onClick={onSubmit} type="submit" disabled={isPending}>
-                {status === "PENDING" && "Send"}
-                {status === "SENT" && "Received"}
-                {status === "RECEIVED"}
-            </Button>
-            {message}
-        </div>
+        <Button onClick={onSubmit} type="submit" disabled={isPending} className="w-full">
+            {status === "PENDING" && "Send"}
+            {status === "SENT" && "Received"}
+            {status === "RECEIVED"}
+            {/* {message} */}
+        </Button>
     );
 }
