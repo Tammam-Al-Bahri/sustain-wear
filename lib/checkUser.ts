@@ -9,9 +9,9 @@ export const checkUser = async () => {
         return null;
     }
 
-    // check if user already in db
+        // check if user already in db
     const loggedInUser = await prisma.user.findUnique({
-        where: { clerkId: user.id },
+        where: { clerkId: user.id }
     });
 
     // if user in db, return user
