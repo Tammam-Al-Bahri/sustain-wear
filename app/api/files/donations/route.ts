@@ -21,7 +21,7 @@ export async function GET() {
       select: { charityId: true },
     });
 
-    const charityIds = memberships.map((m) => m.charityId);
+    const charityIds = memberships.map((m:any) => m.charityId);
     if (charityIds.length === 0) {
       return NextResponse.json({ donations: [] });
     }
@@ -31,11 +31,12 @@ export async function GET() {
       where: { charityId: { in: charityIds } },
       include: {
         item: { include: { user: true } }, // donor info via item.user
+        charity: true,
       },
       orderBy: { createdAt: "desc" },
     });
 
-    const mapped = donations.map((d) => ({
+    const mapped = donations.map((d:any) => ({
       id: d.id,
       itemId: d.itemId,
       charityId: d.charityId,
@@ -43,9 +44,15 @@ export async function GET() {
       createdAt: d.createdAt,
       donorName: d.item?.user?.name,
       donorEmail: d.item?.user?.email,
-      item: {
+      items: {
         id: d.item?.id,
         name: d.item?.name,
+        imageUrls: d.item?.imageUrls,
+        userId: d.item?.userId,
+      },
+      charity: {
+        id: d.charity?.id,
+        name: d.charity?.name,
       },
     }));
 

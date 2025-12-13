@@ -1,6 +1,5 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -44,10 +43,13 @@ export const columns: ColumnDef<Donations>[] = [
       const donation = row.original;
 
       return (
-        <DropdownMenu modal={false}>
+        <DropdownMenu modal={false}  z-index={100}>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-[162px] rounded-5 border-3 border-[#83B47D] bg-[#CEE9CA]">
-              <span >Take action</span>
+            <Button
+              variant="outline"
+              className="w-[162px] rounded-5 border-3 border-[#83B47D] bg-[#CEE9CA]"
+            >
+              <span>Take action</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">

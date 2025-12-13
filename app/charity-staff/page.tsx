@@ -3,7 +3,14 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns, Donations } from "./columns";
 import { Card, CardContent } from "@/components/ui/card";
-import getCurrentUserIdAction from "@/app/actions/getCurrentUserId";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogPortal,
+  DialogOverlay,
+} from "@/components/ui/dialog";
 
 type ApiDonation = {
   id?: string;
@@ -19,12 +26,14 @@ type ApiDonation = {
 export default function CharityStaff() {
   const [data, setData] = useState<Donations[]>([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Donations | null>(null);
 
   useEffect(() => {
     setLoading(true);
     async function load() {
       try {
-        const res = await fetch(`/api/files/donations?userId`);
+        const res = await fetch(`/api/files/donations`);
         if (!res.ok) {
           throw new Error(`API error ${res.status}`);
         }
@@ -88,10 +97,57 @@ export default function CharityStaff() {
             ))}
           </div>
 
-          <div className="border-4 border-b-0 border-r-0 overflow-clip border-solid rounded-[15px] bg-linear-to-b from-white to-[#EDFFEA]">
-            {loading && <div className="p-4">Loading donations…</div>}
-            {!loading && <DataTable columns={columns} data={data} />}
+          <div className="flex flex-col gap-2 ">
+            <h1 className="font-bold text-[25px] w-full text-center">Donations Received</h1>
+
+            <div className="border-4 border-b-0 border-r-0 overflow-clip border-solid rounded-[15px] bg-linear-to-b from-white to-[#EDFFEA]">
+              {loading && (
+                <div className="p-4 border-b-4 border-r-4">
+                  Loading donations…
+                </div>
+              )}
+              {!loading && (
+                <DataTable
+                  columns={columns}
+                  data={data}
+                  onRowClick={(row) => {
+                    setSelected(row);
+                    setOpen(true);
+                  }}
+                />
+              )}
+            </div>
           </div>
+
+          <Dialog open={open} onOpenChange={setOpen} modal={false}>
+            <DialogPortal>
+              <div
+                className="fixed inset-0 z-40 bg-black/50"
+                onClick={() => setOpen(false)}
+                aria-hidden="true"
+              />
+              <DialogContent className="border-3">
+                <DialogHeader>
+                  <DialogTitle>Donation details - Items</DialogTitle>
+                </DialogHeader>
+                {selected ? (
+                  <div className="flex flex-col gap-2 p-4">
+                    <div>
+                      {(selected.item?.imageUrls ?? []).map((u: any) => (
+                        <img key={u} src={u} className="h-20 w-20" />
+                      ))}
+                    </div>
+                    <h3>{selected.item?.name}</h3>
+                    <p>Charity: {selected.charity?.name}</p>
+                    <p>{selected.status}</p>
+                    {/* conditionally render DonationButton like above */}
+                  </div>
+                ) : (
+                  <div>No donation selected.</div>
+                )}
+              </DialogContent>
+            </DialogPortal>
+          </Dialog>
         </div>
       </section>
     </>
