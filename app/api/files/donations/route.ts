@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import { currentUser } from "@clerk/nextjs/server";
 import { getUserIdFromClerkId } from "@/lib/db/user";
+import { prisma } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -15,48 +15,49 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Get the ID's of the charities user is a member of
+    // membership charities
     const memberships = await prisma.membership.findMany({
       where: { userId },
-      select: { charityId: true },
+      include: { charity: true },
     });
 
-    const charityIds = memberships.map((m:any) => m.charityId);
+    // creator charities (no membership)
+    const createdCharities = await prisma.charity.findMany({
+      where: { creatorId: userId },
+    });
+
+    // merge + dedupe charities
+    const charityMap = new Map<string, any>();
+
+    memberships.forEach(m => {
+      charityMap.set(m.charity.id, m.charity);
+    });
+
+    createdCharities.forEach(c => {
+      charityMap.set(c.id, c);
+    });
+
+    const charities = Array.from(charityMap.values());
+    const charityIds = charities.map(c => c.id);
+
     if (charityIds.length === 0) {
-      return NextResponse.json({ donations: [] });
+      return NextResponse.json({ donations: [], charities: [] });
     }
 
-    // Fetch donations for those charities
+    // fetch donations
     const donations = await prisma.donation.findMany({
       where: { charityId: { in: charityIds } },
       include: {
-        item: { include: { user: true } }, // donor info via item.user
+        item: { include: { user: true } },
         charity: true,
       },
       orderBy: { createdAt: "desc" },
     });
 
-    const mapped = donations.map((d:any) => ({
-      id: d.id,
-      itemId: d.itemId,
-      charityId: d.charityId,
-      status: d.status,
-      createdAt: d.createdAt,
-      donorName: d.item?.user?.name,
-      donorEmail: d.item?.user?.email,
-      items: {
-        id: d.item?.id,
-        name: d.item?.name,
-        imageUrls: d.item?.imageUrls,
-        userId: d.item?.userId,
-      },
-      charity: {
-        id: d.charity?.id,
-        name: d.charity?.name,
-      },
-    }));
-
-    return NextResponse.json({ donations: mapped });
+    return NextResponse.json({
+      donations,
+      charities, // ← return charities directly
+    });
   } catch (err) {
     console.error("GET /api/files/donations error:", err);
     return NextResponse.json(

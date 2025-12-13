@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns, Donations } from "./columns";
@@ -11,26 +12,44 @@ import {
   DialogPortal,
   DialogOverlay,
 } from "@/components/ui/dialog";
+import SelectCharity from "@/components/charity/SelectCharity";
+import { Combobox } from "@/components/combobox";
+import CharityCombobox from "@/components/charity/CharityCombobox";
 
 type ApiDonation = {
   id?: string;
   charityId?: string;
   donorName?: string;
-  itemId?: number | string;
-  item?: number | string;
+  itemId?: string;
+  itemType?: string;
   createdAt?: string;
   date?: string;
   status?: string;
 };
 
+
 export default function CharityStaff() {
-  const [data, setData] = useState<Donations[]>([]);
+  const [donations, setDonations] = useState<Donations[]>([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Donations | null>(null);
+  const [selectedCharityId, setSelectedCharityId] = useState("");
+  const [charities, setCharities] = useState<any[]>([]);
+  const filteredDonations = selectedCharityId
+  ? donations.filter(d => d.charityId === selectedCharityId)
+    : donations;
+  
+  useEffect(() => {
+    console.log("selectedCharityId:", selectedCharityId);
+    console.log(
+      "donation charityIds:",
+      donations.map(d => d.charityId)
+    );
+  }, [selectedCharityId, donations]);
+
+
 
   useEffect(() => {
     setLoading(true);
+
     async function load() {
       try {
         const res = await fetch(`/api/files/donations`);
@@ -38,22 +57,30 @@ export default function CharityStaff() {
           throw new Error(`API error ${res.status}`);
         }
         const json = await res.json();
+        console.log("donations fetched:", json);
 
         const rows: ApiDonation[] = Array.isArray(json) ? json : json.donations;
 
         const mapped: Donations[] = rows.map((r: any) => ({
           id: String(r.id),
-          donorName: r.donorName,
-          item: Number(r.item),
-          date: String(r.createdAt),
+          charityId: r.charityId,
+          donorName: r.item.user.name,
+          item: r.item.itemType,
+          date: new Date(r.createdAt).toDateString(),
           status: r.status,
         }));
 
-        setData(mapped);
+        const charityItems = json.charities.map((c: any) => ({
+          value: c.id,
+          label: c.name,
+        }));
+        
+        setDonations(mapped);
+        setCharities(charityItems);
       } catch (err: any) {
         if (err.name === "AbortError") return;
         console.error("fetch donations error:", err);
-        setData([]);
+        setDonations([]);
       } finally {
         setLoading(false);
       }
@@ -98,7 +125,17 @@ export default function CharityStaff() {
           </div>
 
           <div className="flex flex-col gap-2 ">
-            <h1 className="font-bold text-[25px] w-full text-center">Donations Received</h1>
+            <h1 className="font-bold text-[25px] w-full text-center">
+              Donations Received
+            </h1>
+            <Card>
+              <Combobox
+                label="Charity*"
+                items={charities}
+                value={selectedCharityId}
+                onValueChange={setSelectedCharityId}
+              />
+            </Card>
 
             <div className="border-4 border-b-0 border-r-0 overflow-clip border-solid rounded-[15px] bg-linear-to-b from-white to-[#EDFFEA]">
               {loading && (
@@ -106,48 +143,9 @@ export default function CharityStaff() {
                   Loading donations…
                 </div>
               )}
-              {!loading && (
-                <DataTable
-                  columns={columns}
-                  data={data}
-                  onRowClick={(row) => {
-                    setSelected(row);
-                    setOpen(true);
-                  }}
-                />
-              )}
+              {!loading && <DataTable columns={columns} data={filteredDonations} />}
             </div>
           </div>
-
-          <Dialog open={open} onOpenChange={setOpen} modal={false}>
-            <DialogPortal>
-              <div
-                className="fixed inset-0 z-40 bg-black/50"
-                onClick={() => setOpen(false)}
-                aria-hidden="true"
-              />
-              <DialogContent className="border-3">
-                <DialogHeader>
-                  <DialogTitle>Donation details - Items</DialogTitle>
-                </DialogHeader>
-                {selected ? (
-                  <div className="flex flex-col gap-2 p-4">
-                    <div>
-                      {(selected.item?.imageUrls ?? []).map((u: any) => (
-                        <img key={u} src={u} className="h-20 w-20" />
-                      ))}
-                    </div>
-                    <h3>{selected.item?.name}</h3>
-                    <p>Charity: {selected.charity?.name}</p>
-                    <p>{selected.status}</p>
-                    {/* conditionally render DonationButton like above */}
-                  </div>
-                ) : (
-                  <div>No donation selected.</div>
-                )}
-              </DialogContent>
-            </DialogPortal>
-          </Dialog>
         </div>
       </section>
     </>

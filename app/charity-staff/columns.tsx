@@ -13,6 +13,7 @@ import {
 
 export type Donations = {
   id: string;
+  charityId: string;
   donorName: string;
   item: number;
   date: string;
@@ -25,8 +26,8 @@ export const columns: ColumnDef<Donations>[] = [
     header: "Donor Name",
   },
   {
-    accessorKey: "item",
-    header: "Item",
+    accessorKey: "itemType",
+    header: "Item Type",
   },
   {
     accessorKey: "date",

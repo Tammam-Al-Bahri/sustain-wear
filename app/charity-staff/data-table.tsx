@@ -16,25 +16,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onRowClick?: (row: TData) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onRowClick,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -72,8 +62,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="text-center hover:cursor-pointer text-[14px] font-semibold text-[#274D22]"
-                onClick={() => onRowClick?.(row.original)}
+                className="text-center text-[14px] font-semibold text-[#274D22]"
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id} className="border-r-4 border-b-4 ">
