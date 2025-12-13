@@ -154,7 +154,7 @@ export default function CharityStaff() {
                 value={selectedCharityId}
                 onValueChange={setSelectedCharityId}
                 className="bg-[#CCEBC7] text-[#274D22] py-[4px] rounded-[10px] h-[28px] border-3 border-[#83B47D]"
-                contentClassName="bg-[#CCEBC7] text-[#274D22]"
+                contentClassName="bg-[#CCEBC7] text-[#274D22] border-3 border-[#83B47D]"
                 itemClassName="hover:bg-[#bfe3b3]"
               />
             </Card>
