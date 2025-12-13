@@ -27,25 +27,22 @@ type ApiDonation = {
   status?: string;
 };
 
-
 export default function CharityStaff() {
   const [donations, setDonations] = useState<Donations[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCharityId, setSelectedCharityId] = useState("");
   const [charities, setCharities] = useState<any[]>([]);
   const filteredDonations = selectedCharityId
-  ? donations.filter(d => d.charityId === selectedCharityId)
+    ? donations.filter((d) => d.charityId === selectedCharityId)
     : donations;
-  
+
   useEffect(() => {
     console.log("selectedCharityId:", selectedCharityId);
     console.log(
       "donation charityIds:",
-      donations.map(d => d.charityId)
+      donations.map((d) => d.charityId)
     );
   }, [selectedCharityId, donations]);
-
-
 
   useEffect(() => {
     setLoading(true);
@@ -75,7 +72,7 @@ export default function CharityStaff() {
           value: c.id,
           label: c.name,
         }));
-        
+
         setDonations(mapped);
         setCharities(charityItems);
       } catch (err: any) {
@@ -96,21 +93,19 @@ export default function CharityStaff() {
   const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
   const pendingDonations = donations.filter(
-    d => d.status === "PENDING"
+    (d) => d.status === "PENDING"
   ).length;
 
-  const itemsClaimedToday = donations.filter(d => {
+  const itemsClaimedToday = donations.filter((d) => {
     if (!d.date) return false;
     const dDate = new Date(d.date);
     dDate.setHours(0, 0, 0, 0);
     return d.status === "RECEIVED" && dDate.getTime() === today.getTime();
   }).length;
 
-  const totalInventory = donations.filter(
-    d => d.status !== "SENT"
-  ).length;
+  const totalInventory = donations.filter((d) => d.status !== "SENT").length;
 
-  const receivedThisMonth = donations.filter(d => {
+  const receivedThisMonth = donations.filter((d) => {
     if (!d.date) return false;
     const dDate = new Date(d.date);
     return d.status === "RECEIVED" && dDate >= startOfMonth;
@@ -152,15 +147,15 @@ export default function CharityStaff() {
           </div>
 
           <div className="flex flex-col gap-[20px]">
-            <h1 className="font-bold text-[25px] w-full text-center">
-              Donations Received
-            </h1>
-            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] h-full w-full rounded-[25px] px-[25px] py-5 border-4 border-[#83B47D] shadow-none">
+            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] h-full w-full rounded-[25px] px-[13px] py-[8px] border-5 border-[#83B47D] shadow-none">
               <Combobox
                 label="Charity*"
                 items={charities}
                 value={selectedCharityId}
                 onValueChange={setSelectedCharityId}
+                className="bg-[#CCEBC7] text-[#274D22] py-[4px] rounded-[10px] h-[28px] border-3 border-[#83B47D]"
+                contentClassName="bg-[#CCEBC7] text-[#274D22]"
+                itemClassName="hover:bg-[#bfe3b3]"
               />
             </Card>
 
@@ -170,7 +165,9 @@ export default function CharityStaff() {
                   Loading donations…
                 </div>
               )}
-              {!loading && <DataTable columns={columns} data={filteredDonations} />}
+              {!loading && (
+                <DataTable columns={columns} data={filteredDonations} />
+              )}
             </div>
           </div>
         </div>

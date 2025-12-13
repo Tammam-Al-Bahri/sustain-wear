@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({
                     <div id="container" className="overflow-hidden h-full flex flex-col justify-center items-start">
                     {children}
                     </div>
+                    <Toaster />
                     <footer>
                         <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
                     </footer>
