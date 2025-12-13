@@ -7,18 +7,14 @@ export default function donorStats () {
                 <h1>Your Stats</h1>
             </div>
              <div className="flex p-4 justify-center items-start">
-                            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                                 <DashCard
-                                    title="Total Donors"
+                                    title="Total Donotions"
                                     value={"coming soon"}
                                 />
                                 <DashCard
-                                    title="Total Donations"
+                                    title="Total CO2 emmissions saved"
                                     value={"coming soon"}
-                                />
-                                <DashCard 
-                                    title="Total Collaborating Charities" 
-                                    value={"coming soon"} 
                                 />
                             </div>
                         </div>
