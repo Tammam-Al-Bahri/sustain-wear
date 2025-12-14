@@ -128,7 +128,8 @@ export default function CharityStaff() {
 
       <section className="p-4 w-full bg-white gap-[20px]">
         <div className="flex flex-col p-4 gap-5 rounded-[15px] border-4 border-[rgba(196,255,188,0.5)]">
-          <div className="flex w-full flex-row gap-[55px] justify-center h-[123px]">
+          <div className="flex w-full flex-col sm:flex-row gap-4 sm:gap-[55px] justify-center sm:h-[123px]">
+          {/* <div className="flex w-full flex-row gap-[55px] justify-center h-[123px]"> */}
             {statistics.map((s) => (
               <Card
                 key={s.title}
@@ -147,15 +148,15 @@ export default function CharityStaff() {
           </div>
 
           <div className="flex flex-col gap-[20px]">
-            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] h-full w-full rounded-[25px] px-[13px] py-[8px] border-5 border-[#83B47D] shadow-none">
+            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] items-center sm:items-stretch w-full rounded-[25px] px-[13px] py-[8px] border-5 border-[#83B47D] shadow-none">
               <Combobox
                 label="Charity*"
                 items={charities}
                 value={selectedCharityId}
                 onValueChange={setSelectedCharityId}
-                className="bg-[#CCEBC7] text-[#274D22] py-[4px] rounded-[10px] h-[28px] border-3 border-[#83B47D]"
-                contentClassName="bg-[#CCEBC7] text-[#274D22] border-3 border-[#83B47D]"
-                itemClassName="hover:bg-[#bfe3b3]"
+                className="bg-[#CCEBC7] text-[#274D22] py-2 rounded-[10px] w-full sm:w-[171px]  min-h-[44px] px-3 border-3 border-[#83B47D]"
+                contentClassName="bg-[#CCEBC7] text-[#274D22] border-3 border-[#83B47D] w-full"
+                itemClassName="hover:bg-[#bfe3b3] w-full"
               />
             </Card>
 

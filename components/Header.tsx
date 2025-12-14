@@ -5,6 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { checkUser } from "@/lib/checkUser";
 import DonationHeaderButton from "./donation/DonationHeaderButton";
+import UserStatButton from "./UserStatButton";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/headerDropDown";
 
 export default async function Header() {
   const user = await checkUser();
@@ -19,7 +26,8 @@ export default async function Header() {
       {/* Right side (sign buttons / user) */}
       <div className="flex items-center gap-4">
         <SignedOut>
-          <div className="flex items-center gap-3">
+          {/* Large screens: show buttons inline */}
+          <div className="hidden md:flex items-center gap-3">
             <Link href="/sign-in">
               <Button
                 variant="outline"
@@ -35,11 +43,54 @@ export default async function Header() {
               </Button>
             </Link>
           </div>
+
+          {/* Small screens: show dropdown */}
+          <div className="md:hidden flex">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Menu</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  <Link href="/sign-in" className="w-full">
+                    Log in
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href="/sign-up" className="w-full">
+                    Sign Up
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </SignedOut>
 
         <SignedIn>
-          <DonationHeaderButton />
-          <UserButton afterSignOutUrl="/" />
+          {/* Large screens: show buttons inline */}
+          <div className="hidden md:flex gap-4">
+            <DonationHeaderButton />
+            <UserStatButton />
+            <UserButton afterSignOutUrl="/" />
+          </div>
+
+          {/* Small screens: show dropdown */}
+          <div className="flex md:hidden  gap-4">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Menu</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  <DonationHeaderButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <UserStatButton />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <UserButton afterSignOutUrl="/" />
+          </div>
         </SignedIn>
       </div>
     </header>
