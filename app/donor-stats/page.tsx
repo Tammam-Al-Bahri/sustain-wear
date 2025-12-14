@@ -5,12 +5,18 @@ import { useEffect, useState } from "react";
 export default function donorStats () {
 
     const [donationCounts, setDonationCounts] = useState<{userTotal: number | null;}>({userTotal: null,});
+    const [userTotal, setTotalCO2] = useState<number | null>(null);
 
     useEffect(() => {
-    async function fetchCounts() {
-    const res = await fetch("/api/files/items-count");
-    const data = await res.json();
-    setDonationCounts({userTotal: data.userTotal});
+        async function fetchCounts() {
+        const res = await fetch("/api/files/items-count");
+        const data = await res.json();
+        setDonationCounts({userTotal: data.userTotal});
+
+        const cO2Res = await fetch("/api/files/co2-emissions");
+        const cO2Data = await cO2Res.json();
+        setTotalCO2(cO2Data.userTotal);
+
   }
   fetchCounts();
 }, []);
@@ -29,7 +35,7 @@ export default function donorStats () {
                         />
                         <DashCard
                             title="Total CO2 emmissions saved"
-                            value={"coming soon"}
+                            value={userTotal !== null ? String(userTotal) + " kg CO₂" : "Loading..."}
                         />
                     </div>
                 </div>
