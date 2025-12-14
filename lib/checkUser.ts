@@ -20,14 +20,15 @@ export const checkUser = async () => {
     }
 
     // if not in db, create new user
-    const newUser = await prisma.user.create({
-        data: {
-            clerkId: user.id,
-            name: `${user.firstName} ${user.lastName ?? ""}`,
-            imageUrl: user.imageUrl,
-            email: user.emailAddresses[0].emailAddress,
-        },
-    });
-
+ const newUser = await prisma.user.upsert({
+    where: { email: user.emailAddresses[0].emailAddress },
+    update: {},
+    create: {
+        clerkId: user.id,
+        name: `${user.firstName} ${user.lastName ?? ""}`,
+        imageUrl: user.imageUrl,
+        email: user.emailAddresses[0].emailAddress,
+    },
+});
     return newUser;
 };
