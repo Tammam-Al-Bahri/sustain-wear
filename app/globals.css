@@ -273,3 +273,14 @@ header p {
 .clerk-footer {
     display: none;
 }
+
+body.sw-dark {
+  background-color: #0f172a; 
+  color: #f8fafc; 
+}
+
+
+body.sw-high-contrast {
+  background-color: #ffffff;
+  color: #000000;
+}
