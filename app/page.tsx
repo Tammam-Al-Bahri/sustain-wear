@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SignUpButton } from "@clerk/nextjs";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "SustainWear",
@@ -32,7 +33,7 @@ const reasons: Card[] = [
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col gap-[30px] h-100vh  w-full pt-14 pb-7">
+      <div className="flex flex-col gap-[30px] w-full pt-14 pb-7">
         <div className="flex flex-col gap-4">
           <h1 className="text-[32px]/9 text-center font-medium text-[#274D22]">
             Donate Your Clothes.
@@ -63,11 +64,11 @@ export default function Home() {
             ))}
           </div>
 
-          <SignUpButton>
-            <Button className="h-full click py-3 w-[300px] rounded-[15px] bg-[#254D28] shadow-[0px_0px_0px_4px_rgba(37,77,40,0.1)] border- text-[#E5F7E5] text-[20px] font-bold">
+          <Link href="/sign-in">
+            <Button className=" click py-[23px] w-[300px] rounded-[15px] bg-[#254D28] shadow-[0px_0px_0px_4px_rgba(37,77,40,0.1)] border- text-[#E5F7E5] text-[20px] font-bold">
               Start Donating
             </Button>
-          </SignUpButton>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-6 items-center">
