@@ -78,7 +78,7 @@ export default function Donor() {
           </div>
         </div>
         {/* bar chart to show donations over time */}
-        <div className="mx-auto p-4 flex flex-col">
+        <div className="mx-auto p-4 flex-col">
           <BarChart />
         </div>
       </div>
