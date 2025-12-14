@@ -9,7 +9,7 @@ export default function Donor() {
   const { user } = useUser();
 
     const [donorCount, setDonorCount] = useState<number | null>(null);
-    const [donationCount, setDonationCount] = useState<number | null>(null);
+    const [donationCounts, setDonationCounts] = useState<{total: number | null;}>({total: null,});
     const [charityCount, setCharityCount] = useState<number | null>(null);
     const [totalCO2, setTotalCO2] = useState<number | null>(null);
 
@@ -19,9 +19,9 @@ export default function Donor() {
             const donorData = await donorRes.json();
             setDonorCount(donorData.count);
 
-            const donationRes = await fetch("/api/files/items-count");
-            const donationData = await donationRes.json();
-            setDonationCount(donationData.count);
+            const res = await fetch("/api/files/items-count");
+            const data = await res.json();
+            setDonationCounts({ total: data.total });
 
             const charityRes = await fetch("/api/files/charity-count");
             const charityData = await charityRes.json();
@@ -44,28 +44,31 @@ export default function Donor() {
                 <br />
             </div>
             {/* shows data on cards for users to see */}
-            <div className="flex p-4 justify-center items-start">
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                    <DashCard
-                        title="Total Donors"
-                        value={donorCount !== null ? String(donorCount) : "Loading..."}
-                    />
-                    <DashCard
-                        title="Total Donations"
-                        value={donationCount !== null ? String(donationCount) : "Loading..."}
-                    />
-                    <DashCard
-                        title="Total Collaborating Charities"
-                        value={charityCount !== null ? String(charityCount) : "Loading..."}
-                    />
-                    <DashCard
-                        title="Total CO₂ Emissions Saved"
-                        value={totalCO2 !== null ? String(totalCO2) + " kg CO₂" : "Loading..."}
-                    />
+            <div className="flex flex-col p-4 gap-6">
+                <div className="flex p-4 justify-center items-start">
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <DashCard
+                            title="Total Donors"
+                            value={donorCount !== null ? String(donorCount) : "Loading..."}
+                        />
+                        <DashCard
+                            title="Total Donations"
+                            value={donationCounts.total !== null ? String(donationCounts.total) : "Loading..."}
+                        />
+                        <DashCard
+                            title="Total Collaborating Charities"
+                            value={charityCount !== null ? String(charityCount) : "Loading..."}
+                        />
+                        <DashCard
+                            title="Total CO₂ Emissions Saved"
+                            value={totalCO2 !== null ? String(totalCO2) + " kg CO₂" : "Loading..."}
+                        />
+                    </div>
                 </div>
-            </div>
-            <div>
-                <BarChart />
+                {/* bar chart to show donations over time */}
+                <div className="mx-auto p-4 flex flex-col">
+                        <BarChart />
+                </div>
             </div>
         </main>
     );

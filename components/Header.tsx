@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { checkUser } from "@/lib/checkUser";
 import DonationHeaderButton from "./donation/DonationHeaderButton";
 import UserStatButton from "./UserStatButton";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/headerDropDown";
 
 export default async function Header() {
     const user = await checkUser();
@@ -31,11 +32,33 @@ export default async function Header() {
                     </div>
                 </SignedOut>
 
-                <SignedIn>
-                    <DonationHeaderButton />
-                    <UserStatButton />
-                    <UserButton afterSignOutUrl="/" />
+                 <SignedIn>
+                    {/* Large screens: show buttons inline */}
+                    <div className="hidden md:flex gap-4">
+                        <DonationHeaderButton />
+                        <UserStatButton />
+                        <UserButton afterSignOutUrl="/" />
+                    </div>
+
+                    {/* Small screens: show dropdown */}
+                    <div className="md:hidden">
+                        <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline">Menu</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem>
+                            <DonationHeaderButton />
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                            <UserStatButton />
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                        </DropdownMenu>
+                        <UserButton afterSignOutUrl="/" />
+                    </div>
                 </SignedIn>
+
             </div>
         </header>
     );
