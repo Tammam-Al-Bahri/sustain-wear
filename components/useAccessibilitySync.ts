@@ -12,9 +12,9 @@ interface Settings {
 
 export function useAccessibilitySync() {
   useEffect(() => {
-    
+    // Apply settings safely (only what is needed)
     const applySettings = (settings: Settings) => {
-      
+      /* ---------------- TEXT SIZE ---------------- */
       if (settings.textSize) {
         document.documentElement.style.fontSize =
           settings.textSize === "normal"
@@ -24,7 +24,9 @@ export function useAccessibilitySync() {
             : "20px";
       }
 
-     
+      /* ---------------- THEME MODE ---------------- */
+      // IMPORTANT:
+      // Light mode = DO NOTHING (keep page normal)
       document.body.classList.remove(
         "sw-dark",
         "sw-high-contrast"
@@ -39,7 +41,7 @@ export function useAccessibilitySync() {
       }
     };
 
-    
+    /* ---------- 1️⃣ Load saved settings on page load ---------- */
     const raw = localStorage.getItem("sustainwear-settings");
     if (raw) {
       try {
@@ -49,7 +51,7 @@ export function useAccessibilitySync() {
       }
     }
 
-    
+    /* ---------- 2️⃣ Listen for Apply button broadcast ---------- */
     const handler = (event: Event) => {
       const customEvent = event as CustomEvent<Settings>;
       applySettings(customEvent.detail);
