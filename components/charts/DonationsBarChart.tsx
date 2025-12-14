@@ -13,7 +13,14 @@ import {
   scales,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function getPastWeek(): string[] {
   const labels: string[] = [];
@@ -33,12 +40,19 @@ export default function DonationsBarChart() {
   const labels = getPastWeek();
 
   useEffect(() => {
-    const datares = fetch("/api/files/donations-by-date")
-      .then((res) => res.json());
-    const donationData = datares.then((res) => res.data);
-      donationData.then((data: any) => {
-        setCounts(labels.map(label => data[label] || 0));
-      });
+    (async () => {
+      try {
+        const res = await fetch("/api/files/donations-by-date");
+        if (!res.ok) {
+          console.error("Failed to fetch donations-by-date", res.status);
+          return;
+        }
+        const { data = {} } = await res.json();
+        setCounts(labels.map((label) => data[label] || 0));
+      } catch (err) {
+        console.error("Error fetching donation data:", err);
+      }
+    })();
   }, [labels]);
 
   const options = {
@@ -49,11 +63,11 @@ export default function DonationsBarChart() {
     },
     scales: {
       y: {
-        ticks: { 
+        ticks: {
           stepSize: 1,
           callback: function (value: any) {
             return Number.isInteger(value) ? value : null;
-        },
+          },
         },
       },
     },
