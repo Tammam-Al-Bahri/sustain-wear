@@ -97,7 +97,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Link href="/sign-in">
+          <Link href="/sign-up">
             <Button className=" click py-[23px] w-[300px] rounded-[15px] bg-[#254D28] shadow-[0px_0px_0px_4px_rgba(37,77,40,0.1)] border- text-[#E5F7E5] text-[20px] font-bold">
               Start Donating
             </Button>
