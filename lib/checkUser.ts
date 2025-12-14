@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 export const checkUser = async () => {
@@ -9,9 +9,9 @@ export const checkUser = async () => {
         return null;
     }
 
-        // check if user already in db
+    // check if user already in db
     const loggedInUser = await prisma.user.findUnique({
-        where: { clerkId: user.id }
+        where: { clerkId: user.id },
     });
 
     // if user in db, return user
@@ -19,16 +19,27 @@ export const checkUser = async () => {
         return loggedInUser;
     }
 
+    const client = await clerkClient();
+
+    // update role to donor for new users
+    if (!user.publicMetadata?.role) {
+        await client.users.updateUser(user.id, {
+            publicMetadata: {
+                role: "donor",
+            },
+        });
+    }
+
     // if not in db, create new user
- const newUser = await prisma.user.upsert({
-    where: { email: user.emailAddresses[0].emailAddress },
-    update: {},
-    create: {
-        clerkId: user.id,
-        name: `${user.firstName} ${user.lastName ?? ""}`,
-        imageUrl: user.imageUrl,
-        email: user.emailAddresses[0].emailAddress,
-    },
-});
+    const newUser = await prisma.user.upsert({
+        where: { email: user.emailAddresses[0].emailAddress },
+        update: {},
+        create: {
+            clerkId: user.id,
+            name: `${user.firstName} ${user.lastName ?? ""}`,
+            imageUrl: user.imageUrl,
+            email: user.emailAddresses[0].emailAddress,
+        },
+    });
     return newUser;
 };
