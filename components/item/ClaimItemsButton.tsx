@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useItemsContext } from "./ItemsContext";
 import claimItemsAction from "@/app/actions/claimItems";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export default function ClaimItemsButton() {
     const { selectedItemIds, selectedCharityId } = useItemsContext();
@@ -15,6 +16,7 @@ export default function ClaimItemsButton() {
         startTransition(() => {
             claimItemsAction(selectedItemIds, selectedCharityId);
         });
+        toast.success("Item Claimed!");
     }
 
     return (
