@@ -295,4 +295,26 @@ header p {
 }
 
 
+/* Infinite horizontal marquee for stat cards */
+.marquee {
+    width: 100%;
+    overflow: hidden;
+}
+.marquee-track {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: nowrap;
+    /* will be animated via keyframes */
+    animation: marquee-scroll 20s linear infinite;
+}
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+
 

@@ -25,10 +25,19 @@ const statistics: Card[] = [
 ];
 
 const reasons: Card[] = [
-  { title: "Reduce fast fashion waste", stat: "Clothing donations keep usable textiles out of landfills and reduce pollution" },
-  { title: "Support Local Communities", stat: "Every contribution directly helps families and charity partners in your community." },
-  { title: "Promote Sustainable Living", stat: "Donating extends the lifespan of clothing and encourages circular fashion" }
-]
+  {
+    title: "Reduce fast fashion waste",
+    stat: "Clothing donations keep usable textiles out of landfills and reduce pollution",
+  },
+  {
+    title: "Support Local Communities",
+    stat: "Every contribution directly helps families and charity partners in your community.",
+  },
+  {
+    title: "Promote Sustainable Living",
+    stat: "Donating extends the lifespan of clothing and encourages circular fashion",
+  },
+];
 
 export default function Home() {
   return (
@@ -47,21 +56,45 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="flex flex-col gap-[47px] items-center">
-          <div className="flex flex-row gap-7 justify-center h-[159px]">
-            {statistics.map((s) => (
-              <Card
-                key={s.title}
-                className="flex flex-col gap-2 justify-center bg-[#E5F7E5] border-none h-full max-w-[181px] px-[25px] py-5 shadow-[0px_4px_14px_rgba(0,0,0,0.25)] border border-white border-opacity-30"
+        <div className="flex flex-col gap-[47px] items-center w-full">
+          <div className="w-full">
+            <div className="marquee py-4">
+              <div
+                className="marquee-track gap-12!"
+                style={{ animationDuration: "30s" }}
               >
-                <CardContent className="text-center flex flex-col  gap-2 p-0">
-                  <p className="text-[24px] font-semibold text-[#4B6B4B]">
-                    {s.stat}
-                  </p>
-                  <p className="text-[16px] text-[#4B6B4B]">{s.title}</p>
-                </CardContent>
-              </Card>
-            ))}
+                {statistics.map((s) => (
+                  <Card
+                    key={`a-${s.title}`}
+                    className="flex-shrink-0 w-[220px] h-[120px] flex flex-col gap-5 justify-center bg-[#E5F7E5] border-none px-4 py-3 shadow-[0px_4px_14px_rgba(0,0,0,0.12)] border border-white border-opacity-30 overflow-hidden"
+                  >
+                    <CardContent className="text-center h-full flex flex-col justify-center gap-2 p-0">
+                      <p className="text-[18px] sm:text-[20px] font-semibold text-[#4B6B4B] truncate">
+                        {s.stat}
+                      </p>
+                      <p className="text-[13px] sm:text-[14px] text-[#4B6B4B] truncate">
+                        {s.title}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+                {statistics.map((s) => (
+                  <Card
+                    key={`a-${s.title}`}
+                    className="flex-shrink-0 w-[220px] h-[120px] flex flex-col gap-2 justify-center bg-[#E5F7E5] border-none px-4 py-3 shadow-[0px_4px_14px_rgba(0,0,0,0.12)] border border-white border-opacity-30 overflow-hidden"
+                  >
+                    <CardContent className="text-center h-full flex flex-col justify-center gap-2 p-0">
+                      <p className="text-[18px] sm:text-[20px] font-semibold text-[#4B6B4B] truncate">
+                        {s.stat}
+                      </p>
+                      <p className="text-[13px] sm:text-[14px] text-[#4B6B4B] truncate">
+                        {s.title}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
 
           <Link href="/sign-in">
@@ -71,18 +104,22 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="flex flex-col gap-6 items-center">
-          <p  className="text-[24px] text-center font-semibold text-[#274D22]">
+        <div className="flex flex-col gap-6 items-center w-full">
+          <p className="text-[20px] sm:text-[24px] text-center font-semibold text-[#274D22]">
             Why SustainWear Matters?
-          </p>    
+          </p>
 
-          <div className="flex flex-row gap-[63px] justify-center ">
-            {reasons.map((r) => ( 
+          <div className="flex flex-col md:flex-row gap-[30px] md:gap-[63px] justify-center px-40 pb-10 ">
+            {reasons.map((r) => (
               <Card
                 key={r.title}
-                className="flex flex-col  justify-center bg-[#E5F7E5] border-none h-full max-w-[279px] px-[25px] py-5 shadow-[0px_4px_14px_rgba(0,0,0,0.25)] border border-white border-opacity-30">
-                <CardContent className="text-center flex flex-col  gap-[25px] p-0">
-                  <p className="text-[20px] text-[#4B6B4B] font-semibold">{r.title}</p>
+                className="flex flex-col justify-center bg-[#E5F7E5] border-none h-full w-full max-w-full sm:max-w-full 
+                px-[25px] py-5 shadow-[0px_4px_14px_rgba(0,0,0,0.25)] border border-white border-opacity-30"
+              >
+                <CardContent className="text-center flex flex-col gap-[25px] p-0">
+                  <p className="text-[18px] sm:text-[20px] text-[#4B6B4B] font-semibold">
+                    {r.title}
+                  </p>
                   <p className="text-[14px] text-[#4B6B4B]">{r.stat}</p>
                 </CardContent>
               </Card>
@@ -93,4 +130,3 @@ export default function Home() {
     </>
   );
 }
-
