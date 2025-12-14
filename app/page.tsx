@@ -31,7 +31,7 @@ const reasons: Card[] = [
 
 export default function Home() {
   return (
-    <main>
+    <>
       <div className="flex flex-col gap-[30px] h-100vh  w-full pt-14 pb-7">
         <div className="flex flex-col gap-4">
           <h1 className="text-[32px]/9 text-center font-medium text-[#274D22]">
@@ -73,7 +73,7 @@ export default function Home() {
         <div className="flex flex-col gap-6 items-center">
           <p  className="text-[24px] text-center font-semibold text-[#274D22]">
             Why SustainWear Matters?
-          </p>
+          </p>    
 
           <div className="flex flex-row gap-[63px] justify-center ">
             {reasons.map((r) => ( 
@@ -89,6 +89,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }
+
