@@ -33,7 +33,7 @@ export default function RootLayout({
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <Header />
                     <br />
-                    <div id="container" className="overflow-hidden h-full flex flex-col justify-center items-start">
+                    <div id="container" className="overflow-scroll h-full flex flex-col justify-center items-start">
                     {children}
                     </div>
                     <Toaster />

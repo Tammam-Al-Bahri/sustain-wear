@@ -45,7 +45,7 @@ export default async function Header() {
           </div>
 
           {/* Small screens: show dropdown */}
-          <div className="md:hidden">
+          <div className="md:hidden flex">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">Menu</Button>
@@ -75,7 +75,7 @@ export default async function Header() {
           </div>
 
           {/* Small screens: show dropdown */}
-          <div className="md:hidden">
+          <div className="flex md:hidden  gap-4">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">Menu</Button>
