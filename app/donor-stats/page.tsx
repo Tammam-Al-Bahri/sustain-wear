@@ -1,6 +1,7 @@
 "use client";
 import { DashCard } from "@/components/ui/dashcard";
 import { useEffect, useState } from "react";
+import DonationTable from "@/components/charts/DonationsTable";
 
 export default function donorStats () {
 
@@ -21,9 +22,8 @@ export default function donorStats () {
   fetchCounts();
 }, []);
 
-
     return(
-        <main>
+        <>
             <div className="flex p-4 justify-center items-start text-2xl font-bold">
                 <h1>Your Stats</h1>
             </div>
@@ -38,7 +38,14 @@ export default function donorStats () {
                         value={userTotal !== null ? String(userTotal) + " kg CO₂" : "Loading..."}
                     />
                 </div>
+                <br />
             </div>
-        </main>
+            <div className="flex p-4 justify-center items-start flex-col">
+                <div className="text-2xl font-bold mb-4">Your Donations</div>
+                <div>
+                    <DonationTable />
+                </div>
+            </div>
+        </>
     )
 }
