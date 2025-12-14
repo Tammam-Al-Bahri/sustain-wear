@@ -109,7 +109,7 @@ export default function Home() {
             Why SustainWear Matters?
           </p>
 
-          <div className="flex flex-col md:flex-row gap-[30px] md:gap-[63px] justify-center px-40 pb-10 ">
+          <div className="flex flex-col md:flex-row gap-[30px] md:gap-[63px] justify-center px-10 pb-10 md:px-40 ">
             {reasons.map((r) => (
               <Card
                 key={r.title}
