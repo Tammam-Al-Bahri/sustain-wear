@@ -4,8 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Toaster } from "@/components/ui/sonner";
-
-
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -31,15 +30,22 @@ export default function RootLayout({
         <ClerkProvider>
             <html lang="en">
                 <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                    <Header />
-                    <br />
-                    <div id="container" className="overflow-auto h-full flex flex-col justify-center items-start">
-                    {children}
-                    </div>
-                    <Toaster />
-                    <footer>
-                        <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
-                    </footer>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="light"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <Header />
+                        <br />
+                        <div className="bg-background rounded-2xl p-2 overflow-auto h-full flex flex-col justify-center items-start">
+                            {children}
+                        </div>
+                        <Toaster />
+                        <footer>
+                            <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
+                        </footer>
+                    </ThemeProvider>
                 </body>
             </html>
         </ClerkProvider>

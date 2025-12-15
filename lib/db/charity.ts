@@ -38,13 +38,31 @@ export async function updateCharityStatus(charityId: string, status: CharityStat
     });
 }
 
-export async function isCharityCreatorOrStaff(userId: string, charityId: string) {
-    const charity = await prisma.charity.findUnique({
-        where: {
-            id: charityId,
-        },
+export async function isCharityCreatorOrStaff(userId: string, charityId?: string) {
+    // specific charity
+    if (charityId) {
+        const charity = await prisma.charity.findUnique({
+            where: { id: charityId },
+        });
+
+        if (charity?.creatorId === userId) return true;
+
+        const membership = await getMembership(userId, charityId);
+        return !!membership;
+    }
+
+    // any charity
+    const creator = await prisma.charity.findFirst({
+        where: { creatorId: userId },
+        select: { id: true },
     });
-    if (charity?.creatorId === userId) return true;
-    const membership = await getMembership(userId, charityId);
+
+    if (creator) return true;
+
+    const membership = await prisma.membership.findFirst({
+        where: { userId },
+        select: { id: true },
+    });
+
     return !!membership;
 }
