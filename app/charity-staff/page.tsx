@@ -1,20 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns, Donations } from "./columns";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogPortal,
-  DialogOverlay,
-} from "@/components/ui/dialog";
-import SelectCharity from "@/components/charity/SelectCharity";
 import { Combobox } from "@/components/combobox";
-import CharityCombobox from "@/components/charity/CharityCombobox";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Charity } from "@prisma/client";
 
 type ApiDonation = {
   id?: string;
@@ -68,10 +61,12 @@ export default function CharityStaff() {
           status: r.status,
         }));
 
-        const charityItems = json.charities.map((c: any) => ({
-          value: c.id,
-          label: c.name,
-        }));
+        const charityItems = json.charities
+          .filter((c: Charity) => c.status === "ACTIVE")
+          .map((c: Charity) => ({
+            value: c.id,
+            label: c.name,
+          }));
 
         setDonations(mapped);
         setCharities(charityItems);
@@ -103,7 +98,9 @@ export default function CharityStaff() {
     return d.status === "RECEIVED" && dDate.getTime() === today.getTime();
   }).length;
 
-  const totalInventory = donations.filter((d) => d.status !== "SENT").length;
+  const totalInventory = donations.filter(
+    (d) => d.status === "RECEIVED"
+  ).length;
 
   const receivedThisMonth = donations.filter((d) => {
     if (!d.date) return false;
@@ -125,10 +122,19 @@ export default function CharityStaff() {
           Charity Staff - Dashboard
         </h2>
       </section>
+      <section className="flex flex-col p-4 w-full  gap-[20px]">
+        <div className="flex flex-row p-4 gap-5 rounded-[15px] border-4 border-[rgba(196,255,188,0.5)]">
+          <Link href="/charity-staff/choose-items">
+            <Button>Browse Listed Items</Button>
+          </Link>
+          <Link href="/charity-staff/your-charities">
+            <Button>Your Charities</Button>
+          </Link>
+        </div>
 
-      <section className="p-4 w-full bg-white gap-[20px]">
         <div className="flex flex-col p-4 gap-5 rounded-[15px] border-4 border-[rgba(196,255,188,0.5)]">
-          <div className="flex w-full flex-row gap-[55px] justify-center h-[123px]">
+          <div className="flex w-full flex-col sm:flex-row gap-4 sm:gap-[55px] justify-center sm:h-[123px]">
+            {/* <div className="flex w-full flex-row gap-[55px] justify-center h-[123px]"> */}
             {statistics.map((s) => (
               <Card
                 key={s.title}
@@ -147,15 +153,15 @@ export default function CharityStaff() {
           </div>
 
           <div className="flex flex-col gap-[20px]">
-            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] h-full w-full rounded-[25px] px-[13px] py-[8px] border-5 border-[#83B47D] shadow-none">
+            <Card className="flex flex-col gap-2 justify-center bg-[#EDFFEA] items-center sm:items-stretch w-full rounded-[25px] px-[13px] py-[8px] border-5 border-[#83B47D] shadow-none">
               <Combobox
                 label="Charity*"
                 items={charities}
                 value={selectedCharityId}
                 onValueChange={setSelectedCharityId}
-                className="bg-[#CCEBC7] text-[#274D22] py-[4px] rounded-[10px] h-[28px] border-3 border-[#83B47D]"
-                contentClassName="bg-[#CCEBC7] text-[#274D22] border-3 border-[#83B47D]"
-                itemClassName="hover:bg-[#bfe3b3]"
+                className="bg-[#CCEBC7] text-[#274D22] py-2 rounded-[10px] w-full sm:w-[171px]  min-h-[44px] px-3 border-3 border-[#83B47D]"
+                contentClassName="bg-[#CCEBC7] text-[#274D22] border-3 border-[#83B47D] w-full"
+                itemClassName="hover:bg-[#bfe3b3] w-full"
               />
             </Card>
 

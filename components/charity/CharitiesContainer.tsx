@@ -16,6 +16,6 @@ export default async function CharitiesContainer({
     const userId = await getUserIdFromClerkId(clerkUserId ?? undefined);
 
     const charities = await listCharities(creatorId, status);
-
+    if (charities.length === 0) return <div>None</div>;
     return <CharitiesList charities={charities} currentUserId={userId} clerkRole={clerkRole} />;
 }

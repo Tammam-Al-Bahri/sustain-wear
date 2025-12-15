@@ -5,10 +5,10 @@ import { createCharityAction } from "@/app/actions/createCharity";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 export default function CreateCharityForm() {
     const [isPending, startTransition] = useTransition();
-    const [message, setMessage] = useState("");
 
     function onSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -18,10 +18,10 @@ export default function CreateCharityForm() {
 
         startTransition(async () => {
             const result = await createCharityAction(formData);
-            if (result?.error) setMessage(result.error);
+            if (result?.error) toast.error(result.error);
             else {
                 form.reset();
-                setMessage("Created!");
+                toast.success("Created! Awaiting admin approval.");
             }
         });
     }
@@ -40,7 +40,6 @@ export default function CreateCharityForm() {
                         <Button type="submit" disabled={isPending}>
                             {isPending ? "Creating..." : "Create"}
                         </Button>
-                        {message && <p>{message}</p>}
                     </form>
                 </CardContent>
             </Card>

@@ -22,7 +22,11 @@ export default async function DonationCard({
             <CardContent>
                 <div>
                     {item.imageUrls.map((url: string) => (
-                        <img key={url} src={url} />
+                        <img
+                            key={url}
+                            src={url}
+                            className="w-32 h-32 border rouded rounded-2xl object-cover"
+                        />
                     ))}
                 </div>
                 <CardDescription>Status: {status.toLowerCase()}</CardDescription>
