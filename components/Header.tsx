@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/headerDropDown";
 import CharityStaffHeaderButton from "./charity/CharityStaffHeaderButton";
 import { ModeToggle } from "./mode-toggle";
+import CharitiesHeaderButton from "./charity/CharitiesHeaderButton";
 
 export default async function Header() {
     const user = await checkUser();
@@ -65,6 +66,9 @@ export default async function Header() {
                                     </Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
+                                    <CharitiesHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
                                     <DonationHeaderButton />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
@@ -84,6 +88,7 @@ export default async function Header() {
                 <SignedIn>
                     {/* Large screens: show buttons inline */}
                     <div className="hidden md:flex gap-4">
+                        <CharitiesHeaderButton />
                         <DonationHeaderButton />
                         <CharityStaffHeaderButton />
                         <UserStatButton />
@@ -98,6 +103,9 @@ export default async function Header() {
                                 <Button variant="outline">Menu</Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                    <CharitiesHeaderButton />
+                                </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <DonationHeaderButton />
                                 </DropdownMenuItem>
