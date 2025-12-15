@@ -21,7 +21,7 @@ export default function CreateCharityForm() {
             if (result?.error) toast.error(result.error);
             else {
                 form.reset();
-                toast.success("Created!");
+                toast.success("Created! Awaiting admin approval.");
             }
         });
     }

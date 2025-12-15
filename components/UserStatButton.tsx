@@ -9,9 +9,7 @@ export default function UserStatButton() {
     if (pathname !== "/donor") return null;
     return (
         <Link href="/donor-stats">
-            <Button className="bg-green-500 hover:bg-green-600 text-white">
-                Stats
-            </Button>
+            <Button>Stats</Button>
         </Link>
     );
 }

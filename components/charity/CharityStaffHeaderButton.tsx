@@ -9,10 +9,8 @@ export default async function CharityStaffHeaderButton() {
     const isCharityStaff = await isCharityCreatorOrStaff(userId);
     if (!isCharityStaff) return null;
     return (
-        <div>
-            <Link href="/charity-staff/choose-items">
-                <Button>Choose Items</Button>
-            </Link>
-        </div>
+        <Link href="/charity-staff">
+            <Button>Staff Dashboard</Button>
+        </Link>
     );
 }
