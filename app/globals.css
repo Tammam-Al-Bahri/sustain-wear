@@ -237,8 +237,6 @@ body.theme-light {
   --container-gradient-to: rgb(235, 248, 235);
 }
 
-body
-
 body.theme-dark {
   --sw-app-bg: #162a0f;
   --sw-app-text: #ffffff;

@@ -41,12 +41,12 @@ export default function Home() {
     <>
       <div className="flex flex-col gap-[30px] w-full pt-14 pb-7">
         <div className="flex flex-col gap-4">
-          <h1 className="text-[32px]/9 text-center font-medium text-[#274D22] dark:text-white">
+          <h1 className="text-[32px]/9 text-center font-medium">
             Donate Your Clothes.
             <br />
             <i className="font-extrabold"> Make an Impact.</i>
           </h1> 
-          <p className="text-[16px] text-center font-light text-[#4B6B4B] dark:text-white">
+          <p className="text-[16px] text-center font-light">
             Every donation helps reduce waste and support sustainable fashion.
             <br />
             Join the SustainWear community today.

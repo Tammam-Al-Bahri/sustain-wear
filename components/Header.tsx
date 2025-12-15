@@ -103,7 +103,7 @@ export default async function Header() {
                         <Link href="/Settings">
                             <Button
                                 variant="outline"
-                                className="px-6 font-semibold border rounded-[15px] border-white border-opacity-30 gap-2"
+                                className="px-6 font-semibold border rounded-[15px] dark:bg-background bg-background border-white border-opacity-30 gap-2"
                             >
                                 <SettingsIcon className="h-4 w-4" />
                                 Settings
