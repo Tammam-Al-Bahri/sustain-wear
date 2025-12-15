@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAccessibilitySettings } from "@/components/accessibility-context";
 
 type ThemeMode = "light" | "dark" | "highContrast";
 type TextSize = "normal" | "large" | "xlarge";
@@ -15,17 +16,6 @@ interface Settings {
   disableAutoplay: boolean;
   simpleInterface: boolean;
 }
-
-const DEFAULT_SETTINGS: Settings = {
-  themeMode: "light",
-  textSize: "normal",
-  reduceMotion: false,
-  reduceTransparency: false,
-  highlightFocus: false,
-  enableShortcuts: false,
-  disableAutoplay: false,
-  simpleInterface: false,
-};
 
 function getPageTheme(mode: ThemeMode) {
   switch (mode) {
@@ -84,123 +74,130 @@ function getTextSizeClass(size: TextSize) {
   }
 }
 
-export default function SettingsPage() {
-  const [committedSettings, setCommittedSettings] =
-    useState<Settings>(DEFAULT_SETTINGS);
-  const [draftSettings, setDraftSettings] =
-    useState<Settings>(DEFAULT_SETTINGS);
+function SettingsPage() {
+  const { settings: globalSettings, updateSetting, resetSettings, isReady } = useAccessibilitySettings();
+  
+  const [draftSettings, setDraftSettings] = useState<Settings>({
+    themeMode: globalSettings.themeMode,
+    textSize: globalSettings.textSize,
+    reduceMotion: globalSettings.reduceMotion,
+    reduceTransparency: globalSettings.reduceTransparency,
+    highlightFocus: globalSettings.highlightFocus,
+    enableShortcuts: globalSettings.enableShortcuts,
+    disableAutoplay: globalSettings.disableAutoplay,
+    simpleInterface: globalSettings.simpleInterface,
+  });
 
   const [saved, setSaved] = useState<string | null>(null);
+
   useEffect(() => {
-    const raw = localStorage.getItem("sustainwear-settings");
-    if (!raw) return;
-
-    try {
-      const parsed = JSON.parse(raw) as Settings;
-
-
-      setCommittedSettings(parsed);
-      setDraftSettings(parsed);
-    } catch (e) {
-      console.error("Failed to load settings:", e);
+    if (isReady) {
+      setDraftSettings({
+        themeMode: globalSettings.themeMode,
+        textSize: globalSettings.textSize,
+        reduceMotion: globalSettings.reduceMotion,
+        reduceTransparency: globalSettings.reduceTransparency,
+        highlightFocus: globalSettings.highlightFocus,
+        enableShortcuts: globalSettings.enableShortcuts,
+        disableAutoplay: globalSettings.disableAutoplay,
+        simpleInterface: globalSettings.simpleInterface,
+      });
     }
-  }, []);
+  }, [isReady, globalSettings]);
 
-  
-  const theme = useMemo(
-    () => getPageTheme(draftSettings.themeMode),
-    [draftSettings.themeMode]
-  );
-  const textSizeClass = useMemo(
-    () => getTextSizeClass(draftSettings.textSize),
-    [draftSettings.textSize]
-  );
+  const theme = getPageTheme(draftSettings.themeMode);
+  const textSizeClass = getTextSizeClass(draftSettings.textSize);
 
   const updateDraft = <K extends keyof Settings>(key: K, value: Settings[K]) => {
     setDraftSettings((prev) => ({ ...prev, [key]: value }));
   };
 
-  
   const handleApply = () => {
-    localStorage.setItem("sustainwear-settings", JSON.stringify(draftSettings));
-    setCommittedSettings(draftSettings);
-    window.dispatchEvent(
-  new CustomEvent("sustainwear-settings-updated", {
-    detail: draftSettings,
-  })
-);
-
+    Object.entries(draftSettings).forEach(([key, value]) => {
+      updateSetting(key as keyof Settings, value);
+    });
 
     setSaved("Settings applied ✓");
     setTimeout(() => setSaved(null), 2000);
   };
 
-  
   const handleResetDraft = () => {
-    setDraftSettings(committedSettings);
+    setDraftSettings({
+      themeMode: globalSettings.themeMode,
+      textSize: globalSettings.textSize,
+      reduceMotion: globalSettings.reduceMotion,
+      reduceTransparency: globalSettings.reduceTransparency,
+      highlightFocus: globalSettings.highlightFocus,
+      enableShortcuts: globalSettings.enableShortcuts,
+      disableAutoplay: globalSettings.disableAutoplay,
+      simpleInterface: globalSettings.simpleInterface,
+    });
+    
     setSaved("Changes reset ✓");
     setTimeout(() => setSaved(null), 2000);
   };
 
-  
   const handleResetDefaults = () => {
-    localStorage.setItem("sustainwear-settings", JSON.stringify(DEFAULT_SETTINGS));
-    setDraftSettings(DEFAULT_SETTINGS);
-    setCommittedSettings(DEFAULT_SETTINGS);
+    resetSettings();
+    
+    const defaults: Settings = {
+      themeMode: "light",
+      textSize: "normal",
+      reduceMotion: false,
+      reduceTransparency: false,
+      highlightFocus: true,
+      enableShortcuts: true,
+      disableAutoplay: false,
+      simpleInterface: false,
+    };
+    setDraftSettings(defaults);
 
     setSaved("Reset to default ✓");
     setTimeout(() => setSaved(null), 2000);
   };
 
   const hasUnsavedChanges =
-    JSON.stringify(draftSettings) !== JSON.stringify(committedSettings);
+    JSON.stringify(draftSettings) !== JSON.stringify({
+      themeMode: globalSettings.themeMode,
+      textSize: globalSettings.textSize,
+      reduceMotion: globalSettings.reduceMotion,
+      reduceTransparency: globalSettings.reduceTransparency,
+      highlightFocus: globalSettings.highlightFocus,
+      enableShortcuts: globalSettings.enableShortcuts,
+      disableAutoplay: globalSettings.disableAutoplay,
+      simpleInterface: globalSettings.simpleInterface,
+    });
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 w-full
-        
-      ${theme.pageBg} ${theme.pageText}`}
-    >
-      
-
+    <div className={`min-h-screen transition-colors duration-300 w-full ${theme.pageBg} ${theme.pageText}`}>
       <main className={`mx-auto max-w-6xl px-4 py-10 ${textSizeClass}`}>
-        
-        <section
-          className={`rounded-3xl border-2 p-6 shadow-md ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}
-        >
+        <section className={`rounded-3xl border-2 p-6 shadow-md ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}>
           <h1 className="text-2xl font-extrabold">Accessibility & Settings</h1>
           <p className="mt-2 text-sm opacity-80">
-            Change how SustainWear looks and feels. Your changes will only affect
-            other pages after you press <span className="font-semibold">Apply settings</span>.
+            Change how SustainWear looks and feels. Your changes will apply
+            immediately after you press <span className="font-semibold">Apply settings</span>.
           </p>
 
           {hasUnsavedChanges && (
-            <p className="mt-3 text-sm font-semibold">
+            <p className="mt-3 text-sm font-semibold text-amber-600">
               You have unsaved changes.
             </p>
           )}
         </section>
 
-        
         <div className="mt-8 grid gap-6 md:grid-cols-2">
-          
-          <div
-            className={`rounded-3xl border-2 p-6 shadow-lg ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}
-          >
+          <div className={`rounded-3xl border-2 p-6 shadow-lg ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}>
             <h2 className="text-lg font-bold">Theme & appearance</h2>
             <p className="mt-1 text-sm opacity-70">
               Choose text size and theme mode.
             </p>
 
             <div className="mt-6 space-y-5">
-              
               <div>
                 <p className="text-sm font-semibold mb-2">Text size</p>
                 <select
                   value={draftSettings.textSize}
-                  onChange={(e) =>
-                    updateDraft("textSize", e.target.value as TextSize)
-                  }
+                  onChange={(e) => updateDraft("textSize", e.target.value as TextSize)}
                   className={`w-full rounded-xl border-2 px-3 py-2 transition ${theme.selectBg} ${theme.selectText} ${theme.cardBorder}`}
                 >
                   <option value="normal">Normal</option>
@@ -236,9 +233,7 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div
-            className={`rounded-3xl border-2 p-6 shadow-lg ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}
-          >
+          <div className={`rounded-3xl border-2 p-6 shadow-lg ${theme.panelBg} ${theme.panelText} ${theme.cardBorder}`}>
             <h2 className="text-lg font-bold">Accessibility controls</h2>
             <p className="mt-1 text-sm opacity-70">
               Motion, keyboard and cognitive support.
@@ -279,7 +274,6 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <button
             onClick={handleApply}
@@ -325,9 +319,7 @@ function ThemeOption({ label, active, onClick, theme }: ThemeOptionProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`w-full rounded-2xl border-2 px-4 py-3 text-left transition
-        ${active ? theme.buttonActive : theme.cardBorder}
-      `}
+      className={`w-full rounded-2xl border-2 px-4 py-3 text-left transition ${active ? theme.buttonActive : theme.cardBorder}`}
     >
       <p className="font-semibold">{label}</p>
     </button>
@@ -365,3 +357,5 @@ function ToggleRow({
     </div>
   );
 }
+
+export default SettingsPage;
