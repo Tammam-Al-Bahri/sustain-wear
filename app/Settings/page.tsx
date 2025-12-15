@@ -157,7 +157,9 @@ export default function SettingsPage() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${theme.pageBg} ${theme.pageText}`}
+      className={`min-h-screen transition-colors duration-300 w-full
+        
+      ${theme.pageBg} ${theme.pageText}`}
     >
       
 
