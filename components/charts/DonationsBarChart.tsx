@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar } from "react-chartjs-2";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,7 +37,7 @@ function getPastWeek(): string[] {
 
 export default function DonationsBarChart() {
   const [counts, setCounts] = useState<number[]>([]);
-  const labels = getPastWeek();
+  const labels = useMemo(() => getPastWeek(), []);
 
   useEffect(() => {
     (async () => {

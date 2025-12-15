@@ -48,7 +48,11 @@ export default function ItemCard({
             <CardContent>
                 <div>
                     {imageUrls.map((url) => (
-                        <img key={url} src={url} />
+                        <img
+                            key={url}
+                            src={url}
+                            className="w-32 h-32 border rouded rounded-2xl object-cover"
+                        />
                     ))}
                 </div>
                 <CardDescription>Description: {description}</CardDescription>
