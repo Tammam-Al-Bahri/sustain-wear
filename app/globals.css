@@ -173,7 +173,7 @@
 
 body {
     background: linear-gradient(to right, #72a06c, #3d533a);
-    padding: 25px;
+    padding: 25px !important;
 }
 #container {
   flex: auto;
@@ -276,14 +276,11 @@ header p {
 
 body {
   background: linear-gradient(to right, #83B47D, #3D533A);
-  padding: 25px;
-
 
 }
 #container {
-  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  
+  padding: 25px;
 }
 header {
   background: linear-gradient(to right, white, #99D591);
