@@ -40,12 +40,6 @@ export default function donorStats () {
                 </div>
                 <br />
             </div>
-            <div className="flex p-4 justify-center items-start flex-col">
-                <div className="text-2xl font-bold mb-4">Your Donations</div>
-                <div>
-                    <DonationTable />
-                </div>
-            </div>
         </>
     )
 }

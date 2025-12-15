@@ -40,15 +40,15 @@ export default function RootLayout({
                         <AccessibilityProvider>
                             <Header />
                             <br />
-                            <div className="bg-background rounded-2xl p-2 overflow-auto h-full flex flex-col justify-center items-start">
+                            <div id="container" className="rounded-2xl overflow-auto h-full flex flex-col justify-center items-start">
                                 {children}
                             </div>
                             <Toaster />
-                            <footer>
-                                <p>&copy; Copyright {new Date().getFullYear()} SustainWear</p>
-                            </footer>
                         </AccessibilityProvider>
                     </ThemeProvider>
+                            <footer className="w-full p-2 text-center bg-accent rounded-b-[15px]">
+                                <p className="color-black">&copy; Copyright {new Date().getFullYear()} SustainWear</p>
+                            </footer>
                 </body>
             </html>
         </ClerkProvider>

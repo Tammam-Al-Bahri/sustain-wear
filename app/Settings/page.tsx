@@ -134,41 +134,41 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Accessibility */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Accessibility controls</CardTitle>
-            <CardDescription>Motion, keyboard, and cognitive support.</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Toggle
-              label="Reduce motion"
-              value={draft.reduceMotion}
-              onChange={(v) => updateDraft("reduceMotion", v)}
-            />
-            <Toggle
-              label="Reduce transparency"
-              value={draft.reduceTransparency}
-              onChange={(v) => updateDraft("reduceTransparency", v)}
-            />
-            <Toggle
-              label="Highlight keyboard focus"
-              value={draft.highlightFocus}
-              onChange={(v) => updateDraft("highlightFocus", v)}
-            />
-            <Toggle
-              label="Enable shortcuts"
-              value={draft.enableShortcuts}
-              onChange={(v) => updateDraft("enableShortcuts", v)}
-            />
-            <Toggle
-              label="Simplified interface"
-              value={draft.simpleInterface}
-              onChange={(v) => updateDraft("simpleInterface", v)}
-            />
-          </CardContent>
-        </Card>
-      </div>
+                {/* Accessibility */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Accessibility controls</CardTitle>
+                        <CardDescription>Motion, keyboard, and Visibility Support.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <Toggle
+                            label="Reduce motion"
+                            value={draft.reduceMotion}
+                            onChange={(v) => updateDraft("reduceMotion", v)}
+                        />
+                        <Toggle
+                            label="Reduce transparency"
+                            value={draft.reduceTransparency}
+                            onChange={(v) => updateDraft("reduceTransparency", v)}
+                        />
+                        <Toggle
+                            label="Highlight keyboard focus"
+                            value={draft.highlightFocus}
+                            onChange={(v) => updateDraft("highlightFocus", v)}
+                        />
+                        <Toggle
+                            label="Enable shortcuts"
+                            value={draft.enableShortcuts}
+                            onChange={(v) => updateDraft("enableShortcuts", v)}
+                        />
+                        <Toggle
+                            label="Simplified interface"
+                            value={draft.simpleInterface}
+                            onChange={(v) => updateDraft("simpleInterface", v)}
+                        />
+                    </CardContent>
+                </Card>
+            </div>
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
