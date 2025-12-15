@@ -349,9 +349,9 @@ body[data-highlight-focus="true"] *:focus {
   outline-offset: 2px;
 }
 
-/* Add this to your globals.css file */
 
-/* Theme variables */
+
+
 :root {
   --theme-bg: #C8D5B9;
   --theme-text: #2D5016;
@@ -359,7 +359,7 @@ body[data-highlight-focus="true"] *:focus {
   --theme-border: #A8C090;
 }
 
-/* Light theme */
+
 body.theme-light {
   --theme-bg: #C8D5B9;
   --theme-text: #2D5016;
