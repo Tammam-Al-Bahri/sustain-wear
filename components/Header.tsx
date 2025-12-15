@@ -15,6 +15,7 @@ import {
 import CharityStaffHeaderButton from "./charity/CharityStaffHeaderButton";
 import { Settings as SettingsIcon } from "lucide-react";
 import CharitiesHeaderButton from "./charity/CharitiesHeaderButton";
+import AdminHeaderButton from "./AdminHeaderButton";
 
 export default async function Header() {
     const user = await checkUser();
@@ -95,6 +96,7 @@ export default async function Header() {
                     {/* Large screens: show buttons inline */}
                     <div className="hidden md:flex gap-4 items-center">
                         <CharitiesHeaderButton />
+                        <AdminHeaderButton />
                         <DonationHeaderButton />
                         <CharityStaffHeaderButton />
                         <UserStatButton />
@@ -130,6 +132,9 @@ export default async function Header() {
 
                                 <DropdownMenuItem>
                                     <CharitiesHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <AdminHeaderButton />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <DonationHeaderButton />
