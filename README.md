@@ -1,65 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Sustainwear – Implementation Documentation**
 
-## Getting Started
+## **1\. Project Overview**
 
-First, run the development server:
+**Sustainwear** is a platform that facilitates clothing donations from donors to charities through a responsive, user-friendly interface.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Target Users:**
+
+* **Donors:** Individuals or organizations donating clothing
+
+* **Charities:** Manage incoming donations efficiently
+
+* **Admin:** Manage user roles, permissions, and maintain the system
+
+---
+
+## **2\. Technology Stack**
+
+* **Language:** TypeScript
+
+* **Frontend:** React
+
+* **Framework:** Next.js
+
+* **Database:** PostgreSQL (Neon)
+
+* **ORM:** Prisma
+
+* **UI Library:** shadcn UI
+
+* **Styling:** Tailwind CSS, CSS
+
+* **Authentication:** Clerk
+
+* **Image Uploads:** Pinata
+
+---
+
+## **3\. Setup Guide**
+
+### **Step 1: Clone Repository**
+
+`git clone https://github.com/Tammam-Al-Bahri/sustain-wear`  
+`cd sustain-wear`
+
+### **Step 2: Install Dependencies**
+
+`npm install   # or yarn install`
+
+### **Step 3: Database Initialization**
+
+1. the  `.env` file with your PostgreSQL, Clerk, and Pinata API keys that was sent in the assignment submission to access our data and users, or provide your own API keys to start fresh:
+
+```env
+DATABASE_URL=                      # from database provider
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY= # from clerk  
+CLERK_SECRET_KEY=                  # from clerk 
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/  
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+
+PINATA_API_KEY=                    # from pinata  
+PINATA_API_Secret=                 # from pinata  
+PINATA_JWT=                        # from pinata  
+NEXT_PUBLIC_GATEWAY_URL=           # from pinata
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Initialize the prisma client:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`npx prisma generate`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Initialize the database (if using your own API keys):
 
-## How the branch mangment works
+`npx prisma db push`
 
-Git Flow (for structured releases)
+### **Step 4: Run Locally**
 
-main / master → Always stable, production-ready code.
+`npm run dev   # or yarn dev`
 
-develop → Integration branch for new features.
+App will run at [http://localhost:3000](http://localhost:3000)
 
-feature/ → One per new feature (branch off develop).
+### **Step 5 (optional): Log into Clerk to impersonate our users**
 
-release/ → Prepares for new production releases.
+1. Log in to Clerk ([https://clerk.com/](https://clerk.com/)) with our credentials that were sent in the assignment submission to access the Clerk dashboard and impersonate users, in order to avoid recreating all the data. This is a test email and accounts that was created for this project only. You will be prompted for a verification code \- log in to the email account to access the code ([https://account.proton.me/mail](https://account.proton.me/mail)).
 
-hotfix/ → Fixes for urgent production bugs.
+2. Click on the SustainWear application.
 
-Example:
+3. You will see all the users of the application, and you can press the three dots on the right of each user and select the “Impersonate user” option to use the application with different users of each role with their data.
 
-main
+4. You can also create new users by signing up within the application, and can change their roles on the admin dashboard or manually on clerk.
 
-├── develop 
+---
 
-│   ├── feature/login-page 
+## **4\. Key Features**
 
-│   ├── feature/payment-api 
+* **Authentication:** Secure signup, login, logout (Clerk)
 
-│   └── release/v2.0 
+* **Donation Management:** Create and track donations
 
-└── hotfix/typo-in-footer 
+* **Charity Management:** View and manage incoming donations
 
+* **Role-Based Access:** Donors, Charity Staff, Admin
 
-## Learn More
+* **Responsive UI:** Works seamlessly on desktop and mobile
 
-To learn more about Next.js, take a look at the following resources:
+* **Data Management:** Prisma handles database interactions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Image uploads** Pinata handles image uploads for items
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## **5\. GitHub Repository**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Public repo: https://github.com/Tammam-Al-Bahri/sustain-wear
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Regular commits from all members
+
+* Feature branches used for development
+
