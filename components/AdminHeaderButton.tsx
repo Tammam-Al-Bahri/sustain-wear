@@ -4,17 +4,16 @@ import { Button } from "@/components/ui/button";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 
-export default async function CharityStaffHeaderButton() {
+export default async function AdminHeaderButton() {
     const { userId } = await getCurrentUserIdAction();
     if (!userId) return null;
     // const isCharityStaff = await isCharityCreatorOrStaff(userId);
     // if (!isCharityStaff) return null;
     const user = await currentUser();
-    if (user?.publicMetadata?.role !== "admin" && user?.publicMetadata?.role !== "charity-staff")
-        return null;
+    if (user?.publicMetadata?.role !== "admin") return null;
     return (
-        <Link href="/charity-staff">
-            <Button>Staff Dashboard</Button>
+        <Link href="/admin">
+            <Button>Admin Dashboard</Button>
         </Link>
     );
 }

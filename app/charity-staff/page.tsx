@@ -1,22 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "./data-table";
 import { columns, Donations } from "./columns";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogPortal,
-    DialogOverlay,
-} from "@/components/ui/dialog";
-import SelectCharity from "@/components/charity/SelectCharity";
 import { Combobox } from "@/components/combobox";
-import CharityCombobox from "@/components/charity/CharityCombobox";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Charity } from "@prisma/client";
 
 type ApiDonation = {
     id?: string;
@@ -70,10 +61,12 @@ export default function CharityStaff() {
                     status: r.status,
                 }));
 
-                const charityItems = json.charities.map((c: any) => ({
-                    value: c.id,
-                    label: c.name,
-                }));
+                const charityItems = json.charities
+                    .filter((c: Charity) => c.status === "ACTIVE")
+                    .map((c: Charity) => ({
+                        value: c.id,
+                        label: c.name,
+                    }));
 
                 setDonations(mapped);
                 setCharities(charityItems);
@@ -103,7 +96,7 @@ export default function CharityStaff() {
         return d.status === "RECEIVED" && dDate.getTime() === today.getTime();
     }).length;
 
-    const totalInventory = donations.filter((d) => d.status !== "SENT").length;
+    const totalInventory = donations.filter((d) => d.status === "RECEIVED").length;
 
     const receivedThisMonth = donations.filter((d) => {
         if (!d.date) return false;
