@@ -322,4 +322,156 @@ header p {
 }
 
 
+body.theme-light {
+  --bg-color: #C8D5B9;
+  --text-color: #2D5016;
+}
 
+
+body.theme-dark {
+  --bg-color: #0f172a;
+  --text-color: #ffffff;
+}
+
+
+body.theme-high-contrast {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+
+body[data-reduce-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+
+body[data-highlight-focus="true"] *:focus {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Add this to your globals.css file */
+
+/* Theme variables */
+:root {
+  --theme-bg: #C8D5B9;
+  --theme-text: #2D5016;
+  --theme-panel: #ffffff;
+  --theme-border: #A8C090;
+}
+
+/* Light theme */
+body.theme-light {
+  --theme-bg: #C8D5B9;
+  --theme-text: #2D5016;
+  --theme-panel: #ffffff;
+  --theme-border: #A8C090;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Dark theme */
+body.theme-dark {
+  --theme-bg: #0f172a;
+  --theme-text: #ffffff;
+  --theme-panel: #1e293b;
+  --theme-border: #334155;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* High contrast theme */
+body.theme-high-contrast {
+  --theme-bg: #ffffff;
+  --theme-text: #000000;
+  --theme-panel: #ffffff;
+  --theme-border: #000000;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+
+body[data-reduce-motion="true"] * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+
+body[data-highlight-focus="true"] *:focus {
+  outline: 3px solid #2563eb !important;
+  outline-offset: 2px !important;
+}
+
+
+body[data-reduce-transparency="true"] * {
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
+
+
+body[data-simple-interface="true"] {
+  
+}
+/* Theme variables */
+:root {
+  --theme-bg: #C8D5B9;
+  --theme-text: #2D5016;
+  --theme-panel: #ffffff;
+  --theme-border: #A8C090;
+}
+
+/* Light theme */
+body.theme-light {
+  --theme-bg: #C8D5B9;
+  --theme-text: #2D5016;
+  --theme-panel: #ffffff;
+  --theme-border: #A8C090;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Dark theme */
+body.theme-dark {
+  --theme-bg: #0f172a;
+  --theme-text: #ffffff;
+  --theme-panel: #1e293b;
+  --theme-border: #334155;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* High contrast theme */
+body.theme-high-contrast {
+  --theme-bg: #ffffff;
+  --theme-text: #000000;
+  --theme-panel: #ffffff;
+  --theme-border: #000000;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* Reduce motion */
+body[data-reduce-motion="true"] *,
+body[data-reduce-motion="true"] *::before,
+body[data-reduce-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Highlight focus */
+body[data-highlight-focus="true"] *:focus {
+  outline: 3px solid #2563eb !important;
+  outline-offset: 2px !important;
+}
+
+/* Reduce transparency */
+body[data-reduce-transparency="true"] * {
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+}
