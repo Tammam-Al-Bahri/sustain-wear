@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/headerDropDown";
 import CharityStaffHeaderButton from "./charity/CharityStaffHeaderButton";
 import { ModeToggle } from "./mode-toggle";
-import CharitiesHeaderButton from "./charity/CharitiesHeaderButton";
+import { Settings as SettingsIcon } from "lucide-react";
 
 export default async function Header() {
   const user = await checkUser();
@@ -57,6 +57,7 @@ export default async function Header() {
               </Button>
             </Link>
 
+                    < Temporary merge branch 1
                     {/* Small screens: show dropdown */}
                     <div className="md:hidden flex">
                         <DropdownMenu modal={false}>
@@ -135,4 +136,112 @@ export default async function Header() {
             </div>
         </header>
     );
+
+            <ModeToggle />
+          </div>
+
+          {/* Small screens: show dropdown */}
+          <div className="md:hidden flex">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Menu</Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                {/* ✅ Settings */}
+                <DropdownMenuItem asChild>
+                  <Link href="/Settings" className="w-full flex items-center gap-2">
+                    <SettingsIcon className="h-4 w-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href="/sign-in" className="w-full">
+                    Log in
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href="/sign-up" className="w-full">
+                    Sign Up
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem>
+                  <DonationHeaderButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CharityStaffHeaderButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <UserStatButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <ModeToggle />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </SignedOut>
+
+        <SignedIn>
+          {/* Large screens: show buttons inline */}
+          <div className="hidden md:flex gap-4 items-center">
+            {/* ✅ Settings */}
+            <Link href="/Settings">
+              <Button
+                variant="outline"
+                className="px-6 font-semibold border rounded-[15px] border-white border-opacity-30 gap-2"
+              />
+                <SettingsIcon className="h-4 w-4" />
+                Settings
+              </Button>
+            </Link>
+
+            <DonationHeaderButton />
+            <CharityStaffHeaderButton />
+            <UserStatButton />
+            <ModeToggle />
+            <UserButton afterSignOutUrl="/" />
+          </div>
+
+          {/* Small screens: show dropdown */}
+          <div className="flex md:hidden gap-4 items-center">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Menu</Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                {/* ✅ Settings */}
+                <DropdownMenuItem asChild>
+                  <Link href="/Settings" className="w-full flex items-center gap-2">
+                    <SettingsIcon className="h-4 w-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem>
+                  <DonationHeaderButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CharityStaffHeaderButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <UserStatButton />
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <ModeToggle />
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <UserButton afterSignOutUrl="/" />
+          </div>
+        </SignedIn>
+      <div/>
+    </header>
+  );
+
 }
