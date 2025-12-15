@@ -49,7 +49,8 @@
 
 ### **Step 3: Database Initialization**
 
-1. the  `.env` file with your PostgreSQL, Clerk, and Pinata API keys that was sent in the assignment submission to access our data and users, or provide your own API keys to start fresh:
+1. the  `.env` file with your PostgreSQL, Clerk, and Pinata API keys that was sent in the assignment submission to access our data and users, or provide your own API keys to start fresh.
+   place this at the same level as the .env.example file
 
 ```env
 DATABASE_URL=                      # from database provider
