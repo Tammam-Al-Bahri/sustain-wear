@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/headerDropDown";
 import CharityStaffHeaderButton from "./charity/CharityStaffHeaderButton";
 import { ModeToggle } from "./mode-toggle";
-import { Settings as SettingsIcon } from "lucide-react";
+import CharitiesHeaderButton from "./charity/CharitiesHeaderButton";
 
 export default async function Header() {
   const user = await checkUser();
@@ -57,110 +57,82 @@ export default async function Header() {
               </Button>
             </Link>
 
-            <ModeToggle />
-          </div>
+                    {/* Small screens: show dropdown */}
+                    <div className="md:hidden flex">
+                        <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline">Menu</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                    <Link href="/sign-in" className="w-full">
+                                        Log in
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Link href="/sign-up" className="w-full">
+                                        Sign Up
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <CharitiesHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <DonationHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <CharityStaffHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <UserStatButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <ModeToggle />
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                </SignedOut>
 
-          {/* Small screens: show dropdown */}
-          <div className="md:hidden flex">
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Menu</Button>
-              </DropdownMenuTrigger>
+                <SignedIn>
+                    {/* Large screens: show buttons inline */}
+                    <div className="hidden md:flex gap-4">
+                        <CharitiesHeaderButton />
+                        <DonationHeaderButton />
+                        <CharityStaffHeaderButton />
+                        <UserStatButton />
+                        <ModeToggle />
+                        <UserButton afterSignOutUrl="/" />
+                    </div>
 
-              <DropdownMenuContent align="end">
-                {/* ✅ Settings */}
-                <DropdownMenuItem asChild>
-                  <Link href="/Settings" className="w-full flex items-center gap-2">
-                    <SettingsIcon className="h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem asChild>
-                  <Link href="/sign-in" className="w-full">
-                    Log in
-                  </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem asChild>
-                  <Link href="/sign-up" className="w-full">
-                    Sign Up
-                  </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem>
-                  <DonationHeaderButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CharityStaffHeaderButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <UserStatButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <ModeToggle />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </SignedOut>
-
-        <SignedIn>
-          {/* Large screens: show buttons inline */}
-          <div className="hidden md:flex gap-4 items-center">
-            {/* ✅ Settings */}
-            <Link href="/Settings">
-              <Button
-                variant="outline"
-                className="px-6 font-semibold border rounded-[15px] border-white border-opacity-30 gap-2"
-              >
-                <SettingsIcon className="h-4 w-4" />
-                Settings
-              </Button>
-            </Link>
-
-            <DonationHeaderButton />
-            <CharityStaffHeaderButton />
-            <UserStatButton />
-            <ModeToggle />
-            <UserButton afterSignOutUrl="/" />
-          </div>
-
-          {/* Small screens: show dropdown */}
-          <div className="flex md:hidden gap-4 items-center">
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline">Menu</Button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="end">
-                {/* ✅ Settings */}
-                <DropdownMenuItem asChild>
-                  <Link href="/Settings" className="w-full flex items-center gap-2">
-                    <SettingsIcon className="h-4 w-4" />
-                    Settings
-                  </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem>
-                  <DonationHeaderButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CharityStaffHeaderButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <UserStatButton />
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <ModeToggle />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <UserButton afterSignOutUrl="/" />
-          </div>
-        </SignedIn>
-      </div>
-    </header>
-  );
+                    {/* Small screens: show dropdown */}
+                    <div className="flex md:hidden  gap-4">
+                        <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline">Menu</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem>
+                                    <CharitiesHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <DonationHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <CharityStaffHeaderButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <UserStatButton />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <ModeToggle />
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                        <UserButton afterSignOutUrl="/" />
+                    </div>
+                </SignedIn>
+            </div>
+        </header>
+    );
 }
