@@ -2,11 +2,14 @@
 import { DashCard } from "@/components/ui/dashcard";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import BarChart from "@/components/barchart";
+import BarChart from "@/components/charts/DonationsBarChart";
+
 import { useAccessibilitySync } from "@/components/useAccessibilitySync"; 
 
 {/* logic to get the data from the database and display it on the cards */}
+
 export default function ClientPage() {
+    
     useAccessibilitySync(); 
   const { user } = useUser();
 
