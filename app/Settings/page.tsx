@@ -13,6 +13,7 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
+import { toast } from "sonner";
 
 type ThemeMode = "light" | "dark" | "highContrast";
 type TextSize = "normal" | "large" | "xlarge";
@@ -48,7 +49,7 @@ export default function SettingsPage() {
 
     const apply = () => {
         Object.entries(draft).forEach(([k, v]) => updateSetting(k as keyof Settings, v));
-        setSaved("Settings applied");
+        toast.success("Settings applied");
         setTimeout(() => setSaved(null), 2000);
     };
 
