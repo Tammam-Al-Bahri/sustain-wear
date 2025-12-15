@@ -2,11 +2,12 @@ import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 export const checkUser = async () => {
+  try {
     const user = await currentUser();
 
-    // check for current logged in clerk user
-    if (!user) {
-        return null;
+    // No Clerk user
+    if (!user || !user.id) {
+      return null;
     }
 
     // check if user already in db
@@ -14,9 +15,8 @@ export const checkUser = async () => {
         where: { clerkId: user.id },
     });
 
-    // if user in db, return user
     if (loggedInUser) {
-        return loggedInUser;
+      return loggedInUser;
     }
 
     const client = await clerkClient();
@@ -42,4 +42,10 @@ export const checkUser = async () => {
         },
     });
     return newUser;
+  } catch (error) {
+    console.error("checkUser failed:", error);
+
+    // Prevent page crash
+    return null;
+  }
 };
