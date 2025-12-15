@@ -125,7 +125,7 @@ export default function SettingsPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Accessibility controls</CardTitle>
-                        <CardDescription>Motion, keyboard, and cognitive support.</CardDescription>
+                        <CardDescription>Motion, keyboard, and Visibility Support.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <Toggle
@@ -147,11 +147,6 @@ export default function SettingsPage() {
                             label="Enable shortcuts"
                             value={draft.enableShortcuts}
                             onChange={(v) => updateDraft("enableShortcuts", v)}
-                        />
-                        <Toggle
-                            label="Disable autoplay"
-                            value={draft.disableAutoplay}
-                            onChange={(v) => updateDraft("disableAutoplay", v)}
                         />
                         <Toggle
                             label="Simplified interface"
