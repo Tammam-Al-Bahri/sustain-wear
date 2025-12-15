@@ -11,7 +11,7 @@ export default function Admin() {
           Admin Dashboard
         </h2>
       </section>
-      <section className="flex flex-col p-6 w-full bg-white gap-[20px]">
+      <section className="flex flex-col p-6 w-full  gap-[20px]">
         <Card className="flex flex-col gap-4 bg-[#EDFFEA] rounded-[25px] px-[25px] py-6 border-4 border-[#83B47D] shadow-none">
           <CardContent className="flex flex-col gap-4 p-0">
             <p className="text-[16px] font-medium text-[#4B6B4B]">

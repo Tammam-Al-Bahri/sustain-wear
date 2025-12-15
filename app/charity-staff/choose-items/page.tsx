@@ -8,7 +8,7 @@ export default function ChooseItems() {
                     Browse Items
                 </h2>
             </section>
-            <section className="flex flex-col p-6 w-full bg-white gap-[20px]">
+            <section className="flex flex-col p-6 w-full  gap-[20px]">
                 <div className="flex flex-col w-full gap-4">
                     <div className="flex items-center justify-center bg-[#EDFFEA] rounded-[15px] px-4 py-3 border-4 border-[#83B47D]">
                         <h3 className="text-[20px] font-bold text-[#274D22]">Select Items to Request Donation</h3>

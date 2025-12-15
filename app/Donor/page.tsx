@@ -48,7 +48,7 @@ export default function Donor() {
         </h2>
       </section>
 
-      <section className="flex flex-col p-6 w-full bg-white gap-[20px]">
+      <section className="flex flex-col p-6 w-full gap-[20px]">
         <div className="flex justify-center">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
             <DashCard

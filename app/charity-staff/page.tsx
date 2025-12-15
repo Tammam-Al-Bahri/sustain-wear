@@ -122,7 +122,7 @@ export default function CharityStaff() {
           Charity Staff - Dashboard
         </h2>
       </section>
-      <section className="flex flex-col p-4 w-full bg-white gap-[20px]">
+      <section className="flex flex-col p-4 w-full  gap-[20px]">
         <div className="flex flex-row p-4 gap-5 rounded-[15px] border-4 border-[rgba(196,255,188,0.5)]">
           <Link href="/charity-staff/choose-items">
             <Button>Browse Listed Items</Button>

@@ -13,7 +13,7 @@ export default async function YourItems() {
                     Your Items & Donations
                 </h2>
             </section>
-            <section className="flex flex-col p-6 w-full bg-white gap-[20px]">
+            <section className="flex flex-col p-6 w-full gap-[20px]">
                 <div className="flex flex-col lg:flex-row gap-6 w-full">
                     {/* Create Item Section */}
                     <div className="flex flex-col w-full lg:w-1/2 gap-4">
